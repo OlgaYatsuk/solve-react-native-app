@@ -23,12 +23,12 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import CardFormPageContainer from "./src/CardFormPageContainer";
+import CardFormContainer from "./src/components/CardForm/CardFormContainer";
 
 const App: () => React$Node = () => {
   return (
     <>
-      <CardFormPageContainer />
+      <CardFormContainer />
     </>
   );
 };
