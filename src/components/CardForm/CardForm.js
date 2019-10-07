@@ -1,22 +1,66 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {Text, SafeAreaView, View, Button, TextInput} from 'react-native';
+// @flow
 
-import CardFormDetails from "./components/CardFormDetails";
+import React, {Component} from 'react';
+import {
+  Text,
+  TouchableHighlight,
+  SafeAreaView,
+  View,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
+import cn from 'react-native-classnames';
+
+import CardFormDetails from './components/CardFormDetails';
 
 //rules for validation
 const validationRegEx = {
   CVV: '^[0-9]{3,4}$',
-  FirstName: '[a-zA-Z]',
+  firstName: '[a-zA-Z]',
   lastName: '[a-zA-Z]',
   secretQuestion: '[a-zA-Z]',
-  secretAnswer: '[a-zA-Z]'
+  expirationDate: '^[0-9]{4}$',
+  secretAnswer: '[a-zA-Z]',
 };
 
-class CardForm extends Component {
+type Props = {
+  onCardTypeChange: (v1?: string) => void,
+  onFormDataSubmit: (
+    v1?: string,
+    v2?: string,
+    v3?: string,
+    v4: boolean,
+    v5?: string,
+  ) => void,
+};
 
+type isInputFieldValid = {
+  [key: string]: boolean,
+};
+
+type State = {
+  isFormValid: boolean,
+  isSubmiting: boolean,
+  isCardFormDetailsWindowVisible: boolean,
+  isInputFieldValid: isInputFieldValid,
+  firstName?: string,
+  lastName?: string,
+  cardNumber?: string,
+  CVV?: string,
+  isSubmiting: boolean,
+  cardType?: string,
+  secretQuestion?: string,
+  secretAnswer?: string,
+};
+
+class CardForm extends Component<Props, State> {
   state = {
     isFormValid: false,
+    isSubmiting: false,
+    cardNumber: undefined,
+    cardType: undefined,
+    firstName: undefined,
+    lastName: undefined,
     isCardFormDetailsWindowVisible: false,
 
     isInputFieldValid: {
@@ -24,77 +68,94 @@ class CardForm extends Component {
       lastName: false,
       CVV: false,
       secretQuestion: false,
-      secretAnswer: false
-    }
+      secretAnswer: false,
+    },
   };
 
-  handleCardFormInputChange = ( e ) => {
+  handleCardFormInputChange = (name: string) => (
+    event: SyntheticEvent<HTMLInputElement>,
+  ) => {
+    const value = event.nativeEvent.text;
     const regex = new RegExp(validationRegEx[name]);
+
+    this.setState({
+      [name]: value,
+      isInputFieldValid: {
+        ...this.state.isInputFieldValid,
+        [name]: regex.test(value),
+      },
+    });
+  };
+
+  handleSubmit = () => {
+    const {firstName, lastName, cardNumber, cardType} = this.state;
+    const validationObjectStatus = Object.values(
+      this.state.isInputFieldValid,
+    ).every(value => value === true);
 
     this.setState(
       {
-        [name]: value,
-        isInputFieldValid: {
-          ...this.state.isInputFieldValid,
-          [name]: regex.test(value)
-        }
+        isSubmiting: true,
+        isFormValid: validationObjectStatus,
+      },
+      () => {
+        this.props.onFormDataSubmit(
+          firstName,
+          lastName,
+          cardNumber,
+          validationObjectStatus,
+          cardType,
+        );
       },
     );
   };
 
-  handleSubmit = () => {
-    const {firstName, lastName, cardNumber, cardType } = this.state;
-    const validationObjectStatus = Object.values(this.state.isInputFieldValid).every(
-      value => value === true
+  handleCardTypeChange = (cardType?: string) => {
+    this.setState(
+      {
+        cardType,
+      },
+      () => {
+        this.props.onCardTypeChange(cardType);
+      },
     );
-
-    this.setState({
-      isSubmiting: true,
-      isFormValid: validationObjectStatus
-    }, () => {
-      this.props.onFormDataSubmit(firstName, lastName, cardNumber, validationObjectStatus, cardType)
-    });
-
   };
 
-  handleCardTypeChange = (cardType) => {
-    this.setState({
-      cardType
-    }, () => {
-      this.props.onCardTypeChange(cardType);
-    })
+  getInputClassName = (name: string) => {
+    return cn(styles, 'Input', {
+      InputError: this.state.isSubmiting && !this.state.isInputFieldValid[name],
+      null: this.state.isSubmiting && this.state.isInputFieldValid[name],
+    });
   };
 
   render() {
-    const { isFormValid, isSubmiting, cardNumber } = this.state;
-
+    const {isFormValid, isSubmiting, cardNumber} = this.state;
     return (
-      <SafeAreaView className="Container">
-        <View className="CardForm" onSubmit={e => e.preventDefault()}>
+      <SafeAreaView style={styles.BlueView}>
+        <View style={styles.Form} onSubmit={e => e.preventDefault()}>
           <TextInput
             type="text"
             mask="9999 9999 9999 9999"
             placeholder="Credit card number"
-            className={'cardNumber'}
+            style={this.getInputClassName('cardNumber')}
             name="cardNumber"
-            onChange={this.handleCardFormInputChange}
-
+            onChange={this.handleCardFormInputChange('cardNumber')}
           />
           <View className="CardForm__flex-wrapper">
             <TextInput
               type="text"
               mask="99/99"
-              name="ExpirationDate"
-              className={'ExpirationDate'}
-              onChangeText={this.handleCardFormInputChange}
+              name="expirationDate"
+              style={this.getInputClassName('expirationDate')}
+              onChange={this.handleCardFormInputChange('expirationDate')}
               placeholder="Expiration Date"
             />
             <TextInput
               type="text"
               name="CVV"
               placeholder="CVV"
-              className={'CVV'}
-              onChangeText={this.handleCardFormInputChange}
+              style={this.getInputClassName('CVV')}
+              onChange={this.handleCardFormInputChange('CVV')}
             />
           </View>
           <View className="CardForm__flex-wrapper">
@@ -102,52 +163,92 @@ class CardForm extends Component {
               type="text"
               name="firstName"
               placeholder="First Name"
-              className={'firstName'}
-              onChangeText={this.handleCardFormInputChange}
+              style={this.getInputClassName('firstName')}
+              onChange={this.handleCardFormInputChange('firstName')}
             />
             <TextInput
               type="text"
               name="lastName"
               placeholder="Last Name"
-              className={'lastName'}
-              onChangeText={this.handleCardFormInputChange}
+              style={this.getInputClassName('lastName')}
+              onChange={this.handleCardFormInputChange('lastName')}
+            />
+            <TextInput
+              type="text"
+              name="secretQuestion"
+              placeholder="Secret question"
+              style={this.getInputClassName('secretQuestion')}
+              onChange={this.handleCardFormInputChange('secretQuestion')}
+            />
+            <TextInput
+              type="text"
+              name="secretAnswer"
+              placeholder="Secret answer"
+              style={this.getInputClassName('secretAnswer')}
+              onChange={this.handleCardFormInputChange('secretAnswer')}
             />
           </View>
-          <TextInput
-            type="text"
-            name="secretQuestion"
-            placeholder="Secret Question"
-            className={'secretQuestion'}
-            onChangeText={this.handleCardFormInputChange}
-          />
-          <TextInput
-            type="text"
-            name="secretAnswer"
-            placeholder="Secret Answer"
-            className={'secretAnswer'}
-            onChangeText={this.handleCardFormInputChange}
-          />
-          <Button type="submit" title="Submit" className="CardForm__button" onPress={this.handleSubmit}>
-            Submit
-          </Button>
+          <TouchableHighlight style={styles.Button} onPress={this.handleSubmit}>
+            <Text style={styles.ButtonText}>Submit</Text>
+          </TouchableHighlight>
         </View>
-        {isFormValid && isSubmiting  && <CardFormDetails onCardTypeChange = { this.handleCardTypeChange } cardNumber={ cardNumber }/> }
+        {isFormValid && isSubmiting && (
+          <CardFormDetails
+            onCardTypeChange={this.handleCardTypeChange}
+            cardNumber={cardNumber}
+          />
+        )}
       </SafeAreaView>
     );
   }
 }
 
-CardForm.defaultProps = {
-  isCardFormInfoViewVisible: false,
-  isSubmiting: false
-};
+const styles = StyleSheet.create({
+  Form: {
+    alignItems: 'stretch',
+    padding: 30,
+    width: '100%',
+  },
 
-CardForm.propTypes = {
-  isCardFormInfoViewVisible: PropTypes.bool,
-  isSubmiting: PropTypes.bool,
-  onDataChange: PropTypes.func,
-  onCardTypeChange: PropTypes.func,
-  onFormDataSubmit: PropTypes.func
-};
+  BlueView: {
+    backgroundColor: '#dde6f6',
+    flex: 1,
+  },
+
+  Input: {
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 15,
+    backgroundColor: '#fff',
+  },
+
+  InputError: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+
+  Button: {
+    backgroundColor: '#0000d0',
+    borderRadius: 8,
+    padding: 13,
+    marginTop: 15,
+  },
+
+  ButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18,
+  },
+
+  FormTitle: {
+    fontSize: 22,
+    color: '#000',
+    fontWeight: 'bold',
+    marginBottom: 20,
+    lineHeight: 1.3,
+  },
+});
 
 export default CardForm;

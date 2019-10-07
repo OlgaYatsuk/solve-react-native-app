@@ -1,49 +1,55 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { View } from 'react-native';
+// @flow
 
-class CardFormDetails extends PureComponent {
+import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
+import {View, Text} from 'react-native';
+
+type Props = {
+  onCardTypeChange: (v1?: string) => void,
+  cardNumber?: string,
+};
+
+type State = {
+  cardType?: string,
+};
+
+class CardFormDetails extends PureComponent<Props, State> {
   state = {
-    cardType: undefined
+    cardType: '',
   };
-  componentDidMount () {
-    this.setState ({
-      cardType: this.props.cardNumber.slice(15, 19) > 2000 ? "Master Card" : "Visa"
-    })
+
+  componentDidMount() {
+    const {cardNumber} = this.props;
+
+    this.setState({
+      cardType:
+        cardNumber && +cardNumber.slice(15, 19) > 2000 ? 'Master Card' : 'Visa',
+    });
   }
 
-  componentDidUpdate (prevProps) {
-    const { cardNumber, onCardTypeChange } = this.props;
-
-    if (prevProps !== this.props) {
-      const lastFourDigits = cardNumber.slice(15, 19);
-
-      this.setState ({
-        cardType: lastFourDigits > 2000 ? "Master Card" : "Visa"
-      }, ()=> {
-        onCardTypeChange(this.state.cardType);
-      })
+  componentDidUpdate(prevProps: Props) {
+    const {cardNumber, onCardTypeChange} = this.props;
+    if (prevProps === this.props && !cardNumber) {
+      return;
     }
+
+    const cardType: string =
+      cardNumber && +cardNumber.slice(15, 19) > 2000 ? 'Master Card' : 'Visa';
+
+    this.setState({cardType});
+
+    onCardTypeChange(this.state.cardType);
   }
 
   render() {
     if (!this.state.cardType) return null;
 
     return (
-      <View className={ 'CardForm__card-type' }>
-        { this.state.cardType }
+      <View className={'CardForm__card-type'}>
+        <Text>{this.state.cardType}</Text>
       </View>
     );
   }
 }
-
-CardFormDetails.defaultPops = {
-  cardNumber: '1111 1111 1111 1111',
-};
-
-CardFormDetails.propTypes = {
-  cardNumber: PropTypes.string,
-  onCardTypeChange: PropTypes.func
-};
 
 export default CardFormDetails;

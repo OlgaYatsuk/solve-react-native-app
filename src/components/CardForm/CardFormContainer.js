@@ -1,38 +1,67 @@
-import React, { Component } from 'react';
-import PropTypes from "prop-types";
+// @flow
+
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import CardFormInfo from './components/CardFormInfo';
 import CardForm from './CardForm';
 
-class CardFormContainer extends Component {
+type State = {
+  isCardFormInfoVisible: boolean,
+  firstName?: string,
+  lastName?: string,
+  cardType?: string,
+  cardNumber?: string,
+  validationObjectStatus: boolean,
+};
+
+type Props = {};
+
+class CardFormContainer extends Component<Props, State> {
   state = {
     isCardFormInfoVisible: false,
+    firstName: undefined,
+    lastName: undefined,
+    cardType: undefined,
+    cardNumber: undefined,
+    validationObjectStatus: false,
   };
 
-  handleFormDataSubmit = (firstName, lastName, cardNumber, validationObjectStatus, cardType) => {
+  handleFormDataSubmit = (
+    firstName?: string,
+    lastName?: string,
+    cardNumber?: string,
+    validationObjectStatus?: boolean,
+    cardType?: string,
+  ) => {
     this.setState({
       firstName,
       lastName,
       cardNumber,
       validationObjectStatus,
-      cardType
+      cardType,
     });
   };
 
-  handleCardTypeChange = (cardType) => {
+  handleCardTypeChange = (cardType?: string) => {
     this.setState({
-      cardType
-    })
+      cardType,
+    });
   };
 
   render() {
-    const {firstName, lastName, cardType, cardNumber, validationObjectStatus} = this.state;
+    const {
+      firstName,
+      lastName,
+      cardType,
+      cardNumber,
+      validationObjectStatus,
+    } = this.state;
 
     return (
       <React.Fragment>
         <CardForm
           {...this.state}
-          onDataChange={this.onDataChange}
           handleCardTypeChange={this.handleCardTypeChange}
           onFormDataSubmit={this.handleFormDataSubmit}
           onCardTypeChange={this.handleCardTypeChange}
@@ -49,21 +78,5 @@ class CardFormContainer extends Component {
     );
   }
 }
-
-CardFormContainer.defaultProps = {
-  validationObjectStatus: false,
-  firstName: "User",
-  lastName: "User",
-  cardType: "Visa",
-  cardNumber: "1111 1111 1111 1111"
-};
-
-CardFormContainer.propTypes = {
-  validationObjectStatus: PropTypes.bool,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  cardType: PropTypes.string,
-  cardNumber: PropTypes.string
-};
 
 export default CardFormContainer;
