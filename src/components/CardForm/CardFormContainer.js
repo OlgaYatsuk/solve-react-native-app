@@ -1,6 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
+import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 import CardFormInfo from './components/CardFormInfo';
@@ -59,7 +60,7 @@ class CardFormContainer extends Component<Props, State> {
     } = this.state;
 
     return (
-      <React.Fragment>
+      <View style={styles.BlueView}>
         <CardForm
           {...this.state}
           handleCardTypeChange={this.handleCardTypeChange}
@@ -74,9 +75,16 @@ class CardFormContainer extends Component<Props, State> {
           cardType={cardType}
           cardNumber={cardNumber}
         />
-      </React.Fragment>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  BlueView: {
+    backgroundColor: '#dde6f6',
+    flex: 1,
+  },
+});
 
 export default CardFormContainer;

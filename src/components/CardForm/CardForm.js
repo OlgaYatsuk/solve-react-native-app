@@ -131,7 +131,7 @@ class CardForm extends Component<Props, State> {
   render() {
     const {isFormValid, isSubmiting, cardNumber} = this.state;
     return (
-      <SafeAreaView style={styles.BlueView}>
+      <SafeAreaView>
         <View style={styles.Form} onSubmit={e => e.preventDefault()}>
           <TextInput
             type="text"
@@ -208,11 +208,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     padding: 30,
     width: '100%',
-  },
-
-  BlueView: {
-    backgroundColor: '#dde6f6',
-    flex: 1,
   },
 
   Input: {
