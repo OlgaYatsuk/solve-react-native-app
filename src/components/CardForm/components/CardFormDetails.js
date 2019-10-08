@@ -46,7 +46,15 @@ class CardFormDetails extends PureComponent<Props, State> {
 
     return (
       <View className={'CardForm__card-type'}>
-        <Text>{this.state.cardType}</Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 24,
+            textAlign: 'center',
+            padding: 20,
+          }}>
+          {this.state.cardType}
+        </Text>
       </View>
     );
   }

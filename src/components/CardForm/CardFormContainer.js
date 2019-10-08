@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Button, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 import CardFormInfo from './components/CardFormInfo';
@@ -58,6 +58,7 @@ class CardFormContainer extends Component<Props, State> {
       cardNumber,
       validationObjectStatus,
     } = this.state;
+    const {navigate} = this.props.navigation;
 
     return (
       <View style={styles.BlueView}>
@@ -75,6 +76,14 @@ class CardFormContainer extends Component<Props, State> {
           cardType={cardType}
           cardNumber={cardNumber}
         />
+        {validationObjectStatus && (
+          <Button
+            title={"I'm ready"}
+            onPress={() => {
+              navigate('SuccessScreen');
+            }}
+          />
+        )}
       </View>
     );
   }

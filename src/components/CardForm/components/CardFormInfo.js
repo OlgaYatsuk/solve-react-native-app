@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, View} from 'react-native';
+import {Text, Button, View} from 'react-native';
 
 type State = {
   isComponentRendered: boolean,
@@ -58,7 +58,6 @@ class CardFormInfo extends Component<Props, State> {
       !validationObjectStatus
     )
       return null;
-
     return (
       <View className="CardForm__info">
         <Text className="CardForm__subtitle">
@@ -84,11 +83,5 @@ class CardFormInfo extends Component<Props, State> {
     );
   }
 }
-
-CardFormInfo.propTypes = {
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  cardNumber: PropTypes.string,
-};
 
 export default CardFormInfo;
