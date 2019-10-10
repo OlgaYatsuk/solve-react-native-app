@@ -2,8 +2,8 @@
 ; We fork some components by platform
 .*/*[.]android.js
 
-; Ignore "BUCK" generated dirs
-<PROJECT_ROOT>/\.buckd/
+        ; Ignore "BUCK" generated dirs
+        <PROJECT_ROOT>/\.buckd/
 
 ; Ignore polyfills
 node_modules/react-native/Libraries/polyfills/.*
@@ -13,7 +13,7 @@ node_modules/react-native/Libraries/polyfills/.*
 node_modules/warning/.*
 
 ; Flow doesn't support platforms
-.*/Libraries/.*
+.*/Libraries/Utilities/LoadingView.js
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*

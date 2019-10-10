@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import SwipeContainer from './src/components/SwipeScreen/SwipeContainer'
 import WelcomeScreen from './src/components/WelcomeScreen';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -16,13 +17,14 @@ import CardFormInfo from './src/components/CardForm/components/CardFormInfo';
 
 const RootStack = createStackNavigator(
   {
+    SwipeContainer: SwipeContainer,
     WelcomeScreen: WelcomeScreen,
     CardFormContainer: CardFormContainer,
     SuccessScreen: SuccessScreen,
     CardFormInfo: CardFormInfo,
   },
   {
-    initialRouteName: 'WelcomeScreen',
+    initialRouteName: 'SwipeContainer',
   },
 );
 

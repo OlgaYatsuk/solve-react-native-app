@@ -1,10 +1,10 @@
 // @flow
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Text, View, Button} from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
-type Props = {
+type Props = NavigationScreenProps & {
   navigation: Object,
 };
 
@@ -22,7 +22,7 @@ class WelcomeScreen extends Component<Props> {
             padding: 20,
           }}>
           Hello! We would like to offer you a perfect deal: you give us money,
-          and we give you nothing. Click if you can't wait for it:
+          and we give you nothing. Click if you can't waiting for it:
         </Text>
         <Button
           title="Go to Purchasing"

@@ -15,16 +15,17 @@ import CardFormDetails from './components/CardFormDetails';
 
 //rules for validation
 const validationRegEx = {
+  cardNumber: '\\b\\d{4}(| |-)\\d{4}\\1\\d{4}\\1\\d{4}\\b',
   CVV: '^[0-9]{3,4}$',
+  expirationDate: '^\\d{2}\\/\\d{2}$',
   firstName: '[a-zA-Z]',
   lastName: '[a-zA-Z]',
   secretQuestion: '[a-zA-Z]',
-  expirationDate: '^[0-9]{4}$',
   secretAnswer: '[a-zA-Z]',
 };
 
 type Props = {
-  onCardTypeChange: (v1?: string) => void,
+  onCardTypeChange: (v1?: string, v2?: string) => void,
   onFormDataSubmit: (
     v1?: string,
     v2?: string,
@@ -72,9 +73,7 @@ class CardForm extends Component<Props, State> {
     },
   };
 
-  handleCardFormInputChange = (name: string) => (
-    event: SyntheticEvent<HTMLInputElement>,
-  ) => {
+  handleCardFormInputChange = (name: string) => (event: ChangeEvent) => {
     const value = event.nativeEvent.text;
     const regex = new RegExp(validationRegEx[name]);
 
@@ -91,13 +90,11 @@ class CardForm extends Component<Props, State> {
     const {firstName, lastName, cardNumber, cardType} = this.state;
     const validationObjectStatus = Object.values(
       this.state.isInputFieldValid,
-    ).every(value => value === true);
+    ).every(value => !!value);
 
     this.setState(
-      {
-        isSubmiting: true,
-        isFormValid: validationObjectStatus,
-      },
+      { isSubmiting: true,
+        isFormValid: validationObjectStatus },
       () => {
         this.props.onFormDataSubmit(
           firstName,
@@ -115,9 +112,7 @@ class CardForm extends Component<Props, State> {
       {
         cardType,
       },
-      () => {
-        this.props.onCardTypeChange(cardType);
-      },
+      () =>  this.props.onCardTypeChange(cardType) ,
     );
   };
 
@@ -130,59 +125,44 @@ class CardForm extends Component<Props, State> {
 
   render() {
     const {isFormValid, isSubmiting, cardNumber} = this.state;
+
     return (
       <SafeAreaView>
-        <View style={styles.Form} onSubmit={e => e.preventDefault()}>
+        <View style={styles.Form}>
           <TextInput
-            type="text"
-            mask="9999 9999 9999 9999"
             placeholder="Credit card number"
             style={this.getInputClassName('cardNumber')}
-            name="cardNumber"
             onChange={this.handleCardFormInputChange('cardNumber')}
           />
-          <View className="CardForm__flex-wrapper">
+          <View>
             <TextInput
-              type="text"
-              mask="99/99"
-              name="expirationDate"
               style={this.getInputClassName('expirationDate')}
               onChange={this.handleCardFormInputChange('expirationDate')}
               placeholder="Expiration Date"
             />
             <TextInput
-              type="text"
-              name="CVV"
               placeholder="CVV"
               style={this.getInputClassName('CVV')}
               onChange={this.handleCardFormInputChange('CVV')}
             />
           </View>
-          <View className="CardForm__flex-wrapper">
+          <View>
             <TextInput
-              type="text"
-              name="firstName"
               placeholder="First Name"
               style={this.getInputClassName('firstName')}
               onChange={this.handleCardFormInputChange('firstName')}
             />
             <TextInput
-              type="text"
-              name="lastName"
               placeholder="Last Name"
               style={this.getInputClassName('lastName')}
               onChange={this.handleCardFormInputChange('lastName')}
             />
             <TextInput
-              type="text"
-              name="secretQuestion"
               placeholder="Secret question"
               style={this.getInputClassName('secretQuestion')}
               onChange={this.handleCardFormInputChange('secretQuestion')}
             />
             <TextInput
-              type="text"
-              name="secretAnswer"
               placeholder="Secret answer"
               style={this.getInputClassName('secretAnswer')}
               onChange={this.handleCardFormInputChange('secretAnswer')}

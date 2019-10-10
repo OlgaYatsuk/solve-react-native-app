@@ -1,20 +1,20 @@
 // @flow
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Text, Button, View} from 'react-native';
+import {Text, View} from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
 type State = {
   isComponentRendered: boolean,
-  timerId?: TimeOutId,
+  timerId?: *,
 };
 
-type Props = {
+type Props = NavigationScreenProps & {
   firstName?: string,
   lastName?: string,
   cardNumber?: string,
   cardType?: string,
-  validationObjectStatus?: boolean,
+  validationObjectStatus?: boolean
 };
 
 class CardFormInfo extends Component<Props, State> {
@@ -37,10 +37,8 @@ class CardFormInfo extends Component<Props, State> {
   };
 
   componentDidUpdate(prevProps: Props) {
-    if (prevProps !== this.props) {
-      if (!this.state.isComponentRendered) {
+    if (prevProps !== this.props && !this.state.isComponentRendered) {
         return this.startTimer();
-      }
     }
   }
 
@@ -52,15 +50,18 @@ class CardFormInfo extends Component<Props, State> {
       cardType,
       validationObjectStatus,
     } = this.props;
+
+    const { isComponentRendered } = this.state;
+
     if (
-      !this.state.isComponentRendered ||
+      !isComponentRendered &&
       (!firstName && !lastName && !cardNumber && !cardType) ||
       !validationObjectStatus
-    )
-      return null;
+    ) return null;
+
     return (
-      <View className="CardForm__info">
-        <Text className="CardForm__subtitle">
+      <View>
+        <Text>
           Voilà! Here is your information :
         </Text>
         <Text>

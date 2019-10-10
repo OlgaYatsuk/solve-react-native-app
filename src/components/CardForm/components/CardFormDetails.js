@@ -1,7 +1,6 @@
 // @flow
 
 import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
 import {View, Text} from 'react-native';
 
 type Props = {
@@ -19,7 +18,7 @@ class CardFormDetails extends PureComponent<Props, State> {
   };
 
   componentDidMount() {
-    const {cardNumber} = this.props;
+    const { cardNumber } = this.props;
 
     this.setState({
       cardType:
@@ -33,10 +32,9 @@ class CardFormDetails extends PureComponent<Props, State> {
       return;
     }
 
-    const cardType: string =
-      cardNumber && +cardNumber.slice(15, 19) > 2000 ? 'Master Card' : 'Visa';
+    const cardType: string = cardNumber && +cardNumber.slice(15, 19) > 2000 ? 'Master Card' : 'Visa';
 
-    this.setState({cardType});
+    this.setState({ cardType });
 
     onCardTypeChange(this.state.cardType);
   }
@@ -45,7 +43,7 @@ class CardFormDetails extends PureComponent<Props, State> {
     if (!this.state.cardType) return null;
 
     return (
-      <View className={'CardForm__card-type'}>
+      <View>
         <Text
           style={{
             fontWeight: 'bold',

@@ -2,10 +2,10 @@
 
 import React, {Component} from 'react';
 import {View, Button, StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 
 import CardFormInfo from './components/CardFormInfo';
 import CardForm from './CardForm';
+import { NavigationScreenProps } from 'react-navigation';
 
 type State = {
   isCardFormInfoVisible: boolean,
@@ -16,7 +16,7 @@ type State = {
   validationObjectStatus: boolean,
 };
 
-type Props = {};
+type Props = NavigationScreenProps & {};
 
 class CardFormContainer extends Component<Props, State> {
   state = {
@@ -63,7 +63,7 @@ class CardFormContainer extends Component<Props, State> {
     return (
       <View style={styles.BlueView}>
         <CardForm
-          {...this.state}
+          cardType={cardType}
           handleCardTypeChange={this.handleCardTypeChange}
           onFormDataSubmit={this.handleFormDataSubmit}
           onCardTypeChange={this.handleCardTypeChange}

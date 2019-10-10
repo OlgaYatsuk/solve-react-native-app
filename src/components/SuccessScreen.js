@@ -1,10 +1,10 @@
 // @flow
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Text, View, Button} from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
-type Props = {
+type Props = NavigationScreenProps & {
   navigation: Object,
 };
 
