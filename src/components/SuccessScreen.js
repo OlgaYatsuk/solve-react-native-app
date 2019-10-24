@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {Text, View, Button} from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
+import {NavigationScreenProps} from 'react-navigation';
 
 type Props = NavigationScreenProps & {
   navigation: Object,

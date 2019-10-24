@@ -1,5 +1,4 @@
 // @flow
-
 import React, {Component} from 'react';
 import {
   Text,
@@ -7,26 +6,31 @@ import {
   View,
   TextInput,
   StyleSheet,
+  Button,
 } from 'react-native';
-import cn from "react-native-classnames";
 
-type Props = {
-  onSubmit: (v1?: string, v2?: string, v3?:string, v4?: string, v5?: string) => void,
-};
+import cn from 'react-native-classnames';
 
-type isInputFieldValid = {
+type IsInputFieldValid = {
   [key: string]: boolean,
 };
 
+type Props = {
+  isSubmiting: boolean,
+  isLoading: boolean,
+  navigate: (v1: string) => void,
+  isInputFieldValid: IsInputFieldValid,
+  onSubmit?: () => void,
+  onCardFormInputChange: (v1?: string) => void,
+};
+
 type State = {
-  isFormValid: boolean,
   isSubmiting: boolean,
   isCardFormDetailsWindowVisible: boolean,
-  isInputFieldValid: isInputFieldValid,
   firstName?: string,
   lastName?: string,
   creditCardNumber?: string,
-  CVV?: string,
+  cvv?: string,
   isSubmiting: boolean,
   cardType?: string,
   secretQuestion?: string,
@@ -42,9 +46,8 @@ class CardForm extends Component<Props, State> {
       null: isSubmiting && isInputFieldValid[name],
     });
   };
-
   render() {
-    const { isLoading, onCardFormInputChange } = this.props;
+    const {isLoading, onCardFormInputChange, navigate} = this.props;
 
     return (
       <View style={styles.Form}>
@@ -96,6 +99,12 @@ class CardForm extends Component<Props, State> {
         <TouchableHighlight style={styles.Button} onPress={this.props.onSubmit}>
           <Text style={styles.ButtonText}>Submit</Text>
         </TouchableHighlight>
+        <Button
+          onPress={() => {
+            navigate('UsersListContainer');
+          }}
+          title={'Show other people who have paid'}
+        />
       </View>
     );
   }
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     margin: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
 
   Button: {

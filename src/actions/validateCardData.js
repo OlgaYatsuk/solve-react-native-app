@@ -11,7 +11,7 @@ export const validateCardData = (
   val3: string,
   val4: string,
   val5: string,
-  val6: string
+  val6: string,
 ) => (dispatch: ({type: string}) => void) => {
   dispatch({type: VALIDATION_STATUS_REQUEST});
   return serverValidation(val2, val3, val4, val5, val6)

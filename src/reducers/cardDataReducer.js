@@ -7,7 +7,7 @@ const initialValue = {
   expirationDate: '',
   firstName: '',
   lastName: '',
-  cardType: ''
+  cardType: '',
 };
 
 export const cardDataReducer = (

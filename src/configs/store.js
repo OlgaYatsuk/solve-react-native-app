@@ -7,7 +7,7 @@ import {validationStatusReducer} from '../reducers/validationStatusReducer';
 
 const rootReducer = combineReducers({
   cardDataReducer,
-  validationStatusReducer
+  validationStatusReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

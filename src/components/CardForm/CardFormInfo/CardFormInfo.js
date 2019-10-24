@@ -2,19 +2,20 @@
 
 import React, {Component} from 'react';
 import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
-import {NavigationScreenProps} from 'react-navigation';
 
 type State = {
   isComponentRendered: boolean,
   timerId?: *,
 };
 
-type Props = NavigationScreenProps & {
+type Props = {
   firstName?: string,
   lastName?: string,
   creditCardNumber?: string,
   cardType?: string,
-  validationObjectStatus?: boolean
+  isLoading: boolean,
+  isError: boolean,
+  validationObjectStatus?: boolean,
 };
 
 class CardFormInfo extends Component<Props, State> {
@@ -39,7 +40,9 @@ class CardFormInfo extends Component<Props, State> {
     if (isError) {
       return (
         <View>
-          <Text style={styles.ErrorText}>Please, fill the form with valid data</Text>
+          <Text style={styles.ErrorText}>
+            Please, fill the form with valid data
+          </Text>
         </View>
       );
     }
@@ -47,9 +50,7 @@ class CardFormInfo extends Component<Props, State> {
     if (!!creditCardNumber && !!firstName && !isError) {
       return (
         <View style={styles.InfoView}>
-          <Text style={styles.Title}>
-            Voilà! Here is your information 🍾
-          </Text>
+          <Text style={styles.Title}>Voilà! Here is your information 🍾</Text>
           <Text style={styles.Text}>
             <Text>Name: </Text>
             {firstName}
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 
   InfoView: {
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
 
   Text: {
@@ -93,8 +94,8 @@ const styles = StyleSheet.create({
   Title: {
     textAlign: 'center',
     fontSize: 18,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default CardFormInfo;

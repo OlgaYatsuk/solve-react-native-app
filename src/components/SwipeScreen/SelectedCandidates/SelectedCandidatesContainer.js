@@ -18,12 +18,10 @@ class SelectedCandidatesContainer extends Component<Props> {
   //   ))
   // };
   //
-  render (){
+  render() {
     // if (!this.props.likedCandidates) return null;
-    console.log(this.props.likedCandidates)
-    return(
-        <SelectedCandidates users={this.props.likedCandidates} />
-    )
+    console.log(this.props.likedCandidates);
+    return <SelectedCandidates users={this.props.likedCandidates} />;
   }
 }
 

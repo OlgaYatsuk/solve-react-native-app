@@ -10,7 +10,6 @@ export const updateCardData = (
   lastName: string,
   cardType: string,
 ) => {
-
   return {
     type: 'UPDATE_CARD_DATA',
     payload: {

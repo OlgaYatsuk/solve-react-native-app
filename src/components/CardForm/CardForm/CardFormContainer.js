@@ -1,10 +1,15 @@
+// @flow
+
 import React, {Component} from 'react';
-import CardForm from "./CardForm";
-import {View, StyleSheet} from 'react-native'
+import {View} from 'react-native';
 import {connect} from 'react-redux';
+import {NavigationScreenProps} from 'react-navigation';
+
+import CardForm from './CardForm';
+
 import {updateCardData} from '../../../actions/updateCardData';
 import {validateCardData} from '../../../actions/validateCardData';
-import {ValidationStatus} from "../../../utils/validationStatus";
+import {ValidationStatus} from '../../../utils/validationStatus';
 
 //rules for validation
 const validationRegEx = {
@@ -19,23 +24,49 @@ const validationRegEx = {
 
 type Props = {
   isError: boolean,
-  onSubmit: (v1?: string, v2?: string, v3?:string, v4?: string, v5?: string) => void,
+  isLoading: boolean,
+  navigate: (v1: string) => void,
+  updateCardData: (
+    creditCardNumber?: string,
+    expirationDate?: string,
+    cvv?: string,
+    firstName?: string,
+    lastName?: string,
+    secretAnswer?: string,
+    secretQuestion?: string,
+  ) => void,
+  validateCardData: (
+    creditCardNumber?: string,
+    expirationDate?: string,
+    cvv?: string,
+    firstName?: string,
+    lastName?: string,
+  ) => any,
+  onSubmit: () => void,
 };
 
 type State = {
-  creditCardNumber: string,
-  cvv: string,
-  expirationDate: string,
-  firstName: string,
-  lastName: string,
-  secretQuestion: string,
-  secretAnswer: string,
+  creditCardNumber?: string,
+  cvv?: string,
+  isSubmiting?: boolean,
+  expirationDate?: string,
+  firstName?: string,
+  isSubmiting: boolean,
+  lastName?: string,
+  secretQuestion?: string,
+  isInputFieldValid: IsInputFieldValid,
+  secretAnswer?: string,
+};
+
+type IsInputFieldValid = {
+  [key: string]: boolean,
 };
 
 class CardFormContainer extends Component<Props, State> {
   state = {
     isSubmiting: false,
     firstName: undefined,
+    cvv: undefined,
     lastName: undefined,
     creditCardNumber: undefined,
     expirationDate: undefined,
@@ -49,10 +80,12 @@ class CardFormContainer extends Component<Props, State> {
       lastName: false,
       secretQuestion: false,
       secretAnswer: false,
-    }
+    },
   };
 
-  handleCardFormInputChange = (name: string) => (event: ChangeEvent) => {
+  handleCardFormInputChange = (name: string) => (
+    event?: SyntheticEvent<HTMLInputElement>,
+  ) => {
     const value = event.nativeEvent.text;
     const regex = new RegExp(validationRegEx[name]);
 
@@ -67,14 +100,30 @@ class CardFormContainer extends Component<Props, State> {
   };
 
   handleSubmit = () => {
-    const {firstName, lastName, creditCardNumber, expirationDate, secretAnswer, secretQuestion, cvv} = this.state;
+    const {validateCardData, updateCardData} = this.props;
+    const {
+      firstName,
+      lastName,
+      creditCardNumber,
+      expirationDate,
+      secretAnswer,
+      secretQuestion,
+      cvv,
+    } = this.state;
+
     this.setState({
       isSubmiting: true,
     });
 
-    this.props.validateCardData(creditCardNumber, expirationDate, cvv, firstName, lastName)
+    validateCardData(
+      creditCardNumber,
+      expirationDate,
+      cvv,
+      firstName,
+      lastName,
+    );
 
-    this.props.updateCardData(
+    updateCardData(
       creditCardNumber,
       expirationDate,
       cvv,
@@ -86,16 +135,19 @@ class CardFormContainer extends Component<Props, State> {
   };
 
   render() {
+    const {isSubmiting, isInputFieldValid} = this.state;
+    const {isError, isLoading, navigate} = this.props;
+
     return (
       <View>
         <CardForm
-          isSubmiting={this.state.isSubmiting}
-          isInputFieldValid={this.state.isInputFieldValid}
+          isSubmiting={isSubmiting}
+          isInputFieldValid={isInputFieldValid}
           onSubmit={this.handleSubmit}
           onCardFormInputChange={this.handleCardFormInputChange}
-          isFormShown={this.props.isFormShown}
-          isError={this.props.isError}
-          isLoading={this.props.isLoading}
+          isError={isError}
+          navigate={navigate}
+          isLoading={isLoading}
         />
       </View>
     );
@@ -104,14 +156,18 @@ class CardFormContainer extends Component<Props, State> {
 
 const mapDispatchToProps = {
   updateCardData,
-  validateCardData
+  validateCardData,
 };
 
 const mapStateToProps = state => {
   return {
     isFormShown: state.cardDataReducer.isFormShown,
-    isError: state.validationStatusReducer.validationStatus === ValidationStatus.Failure,
-    isLoading: state.validationStatusReducer.validationStatus === ValidationStatus.Request,
+    isError:
+      state.validationStatusReducer.validationStatus ===
+      ValidationStatus.Failure,
+    isLoading:
+      state.validationStatusReducer.validationStatus ===
+      ValidationStatus.Request,
   };
 };
 
@@ -119,4 +175,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(CardFormContainer);
-

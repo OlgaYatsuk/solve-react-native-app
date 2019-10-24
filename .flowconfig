@@ -1,4 +1,6 @@
 [ignore]
+node_modules
+
 ; We fork some components by platform
 .*/*[.]android.js
 
@@ -6,7 +8,6 @@
         <PROJECT_ROOT>/\.buckd/
 
 ; Ignore polyfills
-node_modules/react-native/Libraries/polyfills/.*
 
 ; These should not be required directly
 ; require from fbjs/lib instead: require('fbjs/lib/warning')
@@ -73,3 +74,4 @@ untyped-type-import
 
 [version]
 ^0.109.0
+

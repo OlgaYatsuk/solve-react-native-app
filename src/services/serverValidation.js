@@ -15,7 +15,13 @@ const validation = (
   func: Function,
 ) => {
   return func.then(() => {
-    if (val1.length === 16 && val2 !== undefined && val3 !==undefined && val4 !== undefined && val5 !== undefined) {
+    if (
+      val1.length === 16 &&
+      val2 !== undefined &&
+      val3 !== undefined &&
+      val4 !== undefined &&
+      val5 !== undefined
+    ) {
       alert('Validation success!');
     } else {
       alert('Validation error!');
