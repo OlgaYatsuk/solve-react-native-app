@@ -1,48 +1,41 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {FlatList, View, Text, Image, StyleSheet} from 'react-native';
 
-type Props = {
-  users: User[],
-};
-
 type User = {
-  picture: {large: string},
-  name: {first: string, last: string},
-  dob: {age: string, date: string},
+  picture: { large: string },
+  name: { first: string, last: string },
+  dob: { age: string, date: string },
 };
 
-class UsersList extends Component<Props> {
-  render() {
-    const {users} = this.props;
-    return (
-      <View style={styles.BlueView}>
-        <Text style={styles.Title}>
-          You can trust us, cause every person from this list has given us a lot
-          💰
-        </Text>
-        <FlatList
-          style={styles.FlatList}
-          windowSize={15}
-          data={users}
-          renderItem={({item}) => (
-            <View style={styles.Card}>
-              <Image style={styles.Image} source={{uri: item.picture.large}} />
-              <View>
-                <Text style={styles.UserName}>
-                  {item.name.first} {item.name.last}
-                </Text>
-                <Text style={styles.UserAge}>Age: {item.dob.age}</Text>
-              </View>
+const UsersList = ({users} : {users : User[]}) => {
+  return (
+    <View style={styles.BlueView}>
+      <Text style={styles.Title}>
+        You can trust us, cause every person from this list has given us a lot
+        💰
+      </Text>
+      <FlatList
+        style={styles.FlatList}
+        windowSize={15}
+        data={users}
+        renderItem={({item}) => (
+          <View style={styles.Card}>
+            <Image style={styles.Image} source={{uri: item.picture.large}}/>
+            <View>
+              <Text style={styles.UserName}>
+                {item.name.first} {item.name.last}
+              </Text>
+              <Text style={styles.UserAge}>Age: {item.dob.age}</Text>
             </View>
-          )}
-          keyExtractor={item => item.dob.date}
-        />
-      </View>
-    );
-  }
-}
+          </View>
+        )}
+        keyExtractor={item => item.dob.date}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   FlatList: {

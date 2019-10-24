@@ -1,5 +1,5 @@
 // @flow
-import React, {Component} from 'react';
+import React from 'react';
 import {
   Text,
   TouchableHighlight,
@@ -24,90 +24,72 @@ type Props = {
   onCardFormInputChange: (v1?: string) => void,
 };
 
-type State = {
-  isSubmiting: boolean,
-  isCardFormDetailsWindowVisible: boolean,
-  firstName?: string,
-  lastName?: string,
-  creditCardNumber?: string,
-  cvv?: string,
-  isSubmiting: boolean,
-  cardType?: string,
-  secretQuestion?: string,
-  secretAnswer?: string,
-};
-
-class CardForm extends Component<Props, State> {
-  getInputClassName = (name: string) => {
-    const {isSubmiting, isInputFieldValid} = this.props;
-
+const CardForm = ({isLoading, isSubmiting, onCardFormInputChange, navigate, isInputFieldValid, onSubmit} : Props) => {
+  const getInputClassName = (name: string) => {
     return cn(styles, 'Input', {
       InputError: isSubmiting && !isInputFieldValid[name],
       null: isSubmiting && isInputFieldValid[name],
     });
   };
-  render() {
-    const {isLoading, onCardFormInputChange, navigate} = this.props;
 
-    return (
-      <View style={styles.Form}>
-        <Text style={styles.Title}>We are waiting for your data 😍</Text>
+  return (
+    <View style={styles.Form}>
+      <Text style={styles.Title}>We are waiting for your data 😍</Text>
+      <TextInput
+        editable={!isLoading}
+        placeholder="Credit card number"
+        style={getInputClassName('creditCardNumber')}
+        onChange={onCardFormInputChange('creditCardNumber')}
+      />
+      <View>
         <TextInput
           editable={!isLoading}
-          placeholder="Credit card number"
-          style={this.getInputClassName('creditCardNumber')}
-          onChange={onCardFormInputChange('creditCardNumber')}
-        />
-        <View>
-          <TextInput
-            editable={!isLoading}
-            style={this.getInputClassName('expirationDate')}
-            onChange={onCardFormInputChange('expirationDate')}
-            placeholder="Expiration Date"
-          />
-          <TextInput
-            editable={!isLoading}
-            placeholder="CVV"
-            style={this.getInputClassName('cvv')}
-            onChange={onCardFormInputChange('cvv')}
-          />
-        </View>
-        <TextInput
-          editable={!isLoading}
-          placeholder="First Name"
-          style={this.getInputClassName('firstName')}
-          onChange={onCardFormInputChange('firstName')}
+          style={getInputClassName('expirationDate')}
+          onChange={onCardFormInputChange('expirationDate')}
+          placeholder="Expiration Date"
         />
         <TextInput
           editable={!isLoading}
-          placeholder="Last Name"
-          style={this.getInputClassName('lastName')}
-          onChange={onCardFormInputChange('lastName')}
-        />
-        <TextInput
-          editable={!isLoading}
-          placeholder="Secret question"
-          style={this.getInputClassName('secretQuestion')}
-          onChange={onCardFormInputChange('secretQuestion')}
-        />
-        <TextInput
-          editable={!isLoading}
-          placeholder="Secret answer"
-          style={this.getInputClassName('secretAnswer')}
-          onChange={onCardFormInputChange('secretAnswer')}
-        />
-        <TouchableHighlight style={styles.Button} onPress={this.props.onSubmit}>
-          <Text style={styles.ButtonText}>Submit</Text>
-        </TouchableHighlight>
-        <Button
-          onPress={() => {
-            navigate('UsersListContainer');
-          }}
-          title={'Show other people who have paid'}
+          placeholder="CVV"
+          style={getInputClassName('cvv')}
+          onChange={onCardFormInputChange('cvv')}
         />
       </View>
-    );
-  }
+      <TextInput
+        editable={!isLoading}
+        placeholder="First Name"
+        style={getInputClassName('firstName')}
+        onChange={onCardFormInputChange('firstName')}
+      />
+      <TextInput
+        editable={!isLoading}
+        placeholder="Last Name"
+        style={getInputClassName('lastName')}
+        onChange={onCardFormInputChange('lastName')}
+      />
+      <TextInput
+        editable={!isLoading}
+        placeholder="Secret question"
+        style={getInputClassName('secretQuestion')}
+        onChange={onCardFormInputChange('secretQuestion')}
+      />
+      <TextInput
+        editable={!isLoading}
+        placeholder="Secret answer"
+        style={getInputClassName('secretAnswer')}
+        onChange={onCardFormInputChange('secretAnswer')}
+      />
+      <TouchableHighlight style={styles.Button} onPress={onSubmit}>
+        <Text style={styles.ButtonText}>Submit</Text>
+      </TouchableHighlight>
+      <Button
+        onPress={() => {
+          navigate('UsersListContainer');
+        }}
+        title={'Show other people who have paid'}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

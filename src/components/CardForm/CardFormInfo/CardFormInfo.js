@@ -1,78 +1,57 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
 
-type State = {
-  isComponentRendered: boolean,
-  timerId?: *,
-};
-
 type Props = {
-  firstName?: string,
-  lastName?: string,
-  creditCardNumber?: string,
-  cardType?: string,
-  isLoading: boolean,
-  isError: boolean,
-  validationObjectStatus?: boolean,
+  cardType?: string, firstName?: string, lastName?: string, creditCardNumber?: string, isError?: boolean, isLoading?: boolean
 };
 
-class CardFormInfo extends Component<Props, State> {
-  render() {
-    const {
-      cardType,
-      firstName,
-      lastName,
-      creditCardNumber,
-      isError,
-      isLoading,
-    } = this.props;
-
-    if (isLoading) {
-      return (
-        <View>
-          <ActivityIndicator size="large" />
-        </View>
-      );
-    }
-
-    if (isError) {
-      return (
-        <View>
-          <Text style={styles.ErrorText}>
-            Please, fill the form with valid data
-          </Text>
-        </View>
-      );
-    }
-
-    if (!!creditCardNumber && !!firstName && !isError) {
-      return (
-        <View style={styles.InfoView}>
-          <Text style={styles.Title}>Voilà! Here is your information 🍾</Text>
-          <Text style={styles.Text}>
-            <Text>Name: </Text>
-            {firstName}
-          </Text>
-          <Text style={styles.Text}>
-            <Text>Last Name: </Text>
-            {lastName}
-          </Text>
-          <Text style={styles.Text}>
-            <Text>Card type: </Text>
-            {cardType}
-          </Text>
-          <Text style={styles.Text}>
-            <Text>Last 4 digits of your card: **** **** ****</Text>
-            {creditCardNumber.slice(12, 16)}
-          </Text>
-        </View>
-      );
-    }
-    return <View />;
+const CardFormInfo = ({cardType, firstName, lastName, creditCardNumber, isError, isLoading} : Props) => {
+  if (isLoading) {
+    return (
+      <View>
+        <ActivityIndicator size="large"/>
+      </View>
+    );
   }
+
+  if (isError) {
+    return (
+      <View>
+        <Text style={styles.ErrorText}>
+          Please, fill the form with valid data
+        </Text>
+      </View>
+    );
+  }
+
+  if (!!creditCardNumber && !!firstName && !isError) {
+    return (
+      <View style={styles.InfoView}>
+        <Text style={styles.Title}>Voilà! Here is your information 🍾</Text>
+        <Text style={styles.Text}>
+          <Text>Name: </Text>
+          {firstName}
+        </Text>
+        <Text style={styles.Text}>
+          <Text>Last Name: </Text>
+          {lastName}
+        </Text>
+        <Text style={styles.Text}>
+          <Text>Card type: </Text>
+          {cardType}
+        </Text>
+        <Text style={styles.Text}>
+          <Text>Last 4 digits of your card: **** **** ****</Text>
+          {creditCardNumber.slice(12, 16)}
+        </Text>
+      </View>
+    );
+  }
+  return <View/>;
 }
+
 
 const styles = StyleSheet.create({
   ErrorText: {
