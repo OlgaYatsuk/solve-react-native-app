@@ -17,7 +17,7 @@ class UsersList extends Component<Props> {
   render() {
     const {users} = this.props;
     return (
-      <View>
+      <View style={styles.BlueView}>
         <Text style={styles.Title}>
           You can trust us, cause every person from this list has given us a lot
           💰
@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     marginBottom: 10,
+  },
+
+  BlueView: {
+    backgroundColor: '#dde6f6',
+    flex: 1,
   },
 
   Card: {
