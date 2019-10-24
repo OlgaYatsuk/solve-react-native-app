@@ -1,24 +1,14 @@
-// @flow
 import React from 'react';
 import {StyleSheet, Button, Text, View, Animated, Dimensions, PanResponder} from 'react-native';
 import SwipeCard from './SwipeCard';
 import {Card} from 'react-native-elements';
-import jobs from './data';
-
-
-type State = {
-  likedJobs: number,
-  passedJobs: number
-}
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
 
-class SwipeContainer extends React.Component<State> {
+class SwipeCardContainer extends React.Component<State> {
   state = {
-    likedJobs: 0,
-    passedJobs: 0,
     index: 0
   };
 
@@ -45,7 +35,16 @@ class SwipeContainer extends React.Component<State> {
     Animated.timing(this.position, {
       toValue: {x, y: 0},
       duration: SWIPE_OUT_DURATION
-    }).start(() => this.onSwipeComplete(direction));
+    }).start(() => this.handleSwipeComplete(direction));
+  };
+
+  handleSwipeComplete = (direction) => {
+    const item = this.props.users[this.state.index];
+
+
+    direction === 'right' ? this.props.onSwipeRight(item) : this.props.onSwipeLeft(item);
+    this.position.setValue({x: 0, y: 0});
+    this.setState({index: this.state.index + 1})
   };
 
   resetPosition = () => {
@@ -53,18 +52,6 @@ class SwipeContainer extends React.Component<State> {
       toValue: {x: 0, y: 0}
     }).start();
   };
-
-  onSwipeComplete(direction) {
-    const {onSwipeLeft, onSwipeRight} = this;
-    const item = jobs[this.state.index];
-
-    direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item);
-    this.position.setValue({x: 0, y: 0});
-    this.setState({index: this.state.index + 1})
-
-    // UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-    // LayoutAnimation.spring();
-  }
 
   getCardStyle() {
     const {position} = this;
@@ -79,26 +66,13 @@ class SwipeContainer extends React.Component<State> {
     }
   }
 
-  onSwipeRight = () => {
-    this.setState(({likedJobs}) => ({
-      likedJobs: likedJobs + 1
-    }));
-  };
-
-  onSwipeLeft = () => {
-    this.setState(({passedJobs}) => ({
-      passedJobs: passedJobs + 1
-    }));
-  };
-
-
   renderNoMoreCards = () => {
     return (
       <Card title="No More cards">
         <Button
           title="Reload"
           large
-          onPress={this.resetSearch}
+          onPress={this.props.resetSearch}
           icon={{name: 'my-location'}}
           backgroundColor="#03A9F4"
         />
@@ -106,56 +80,38 @@ class SwipeContainer extends React.Component<State> {
     );
   };
 
-  resetSearch = () => {
-    this.setState({
-      index: 0,
-      likedJobs: 0,
-      passedJobs: 0
-    })
-  };
-
-
   render() {
-    const {passedJobs, likedJobs} = this.state;
-
-    if (this.state.index >= jobs.length) {
+    const {users} = this.props;
+    if (this.state.index >= this.props.users.length) {
       return this.renderNoMoreCards();
     }
 
     return (
       <View style={styles.container}>
-        <View style={styles.statusStyle}>
-          <Text style={{color: 'red'}}>Passed: {passedJobs}</Text>
-          <Text style={{color: 'blue'}}>Liked: {likedJobs}</Text>
-        </View>
         <View>
-        {jobs.map((job, index) => {
+        {users.map((user, index) => {
           if (index < this.state.index) {
             return null;
           }
 
           if (index === this.state.index) {
-            return <Animated.View style={[this.getCardStyle(), styles.cardStyle, {zIndex: 99}]}
+            return <Animated.View
+              style={[this.getCardStyle(), styles.cardStyle, {zIndex: 99}]}
                                   {...this._panResponder.panHandlers}>
               <SwipeCard
-                style={[styles.cardStyle, {top: 20 * (index - this.state.index), zIndex: 5}]}
-                key={job.jobId}
-                title={job.jobtitle}
-                company={job.company}
-                formattedRelativeTime={job.formattedRelativeTime}
-                snippet={job.snippet}
+                title={user.name.first}
+                name={`${user.name.first} ${user.name.last}`}
+                photo={user.picture.large}
               />
             </Animated.View>
           }
 
           return (
-            <View style={[styles.cardStyle, { top: 20 * (index - this.state.index), zIndex: 5 }]}>
+            <View key={index} style={[styles.cardStyle, { top: 0.9 * (index - this.state.index), zIndex: 5 }]}>
               <SwipeCard
-                key={job.jobId}
-                title={job.jobtitle}
-                company={job.company}
-                formattedRelativeTime={job.formattedRelativeTime}
-                snippet={job.snippet}
+                title={user.name.first}
+                photo={user.picture.large}
+                name={`${user.name.first} ${user.name.last}`}
               />
             </View>
           )
@@ -186,4 +142,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SwipeContainer;
+export default SwipeCardContainer;

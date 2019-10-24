@@ -26,7 +26,7 @@ class WelcomeScreen extends Component<Props> {
         </Text>
         <Button
           title="Go to Purchasing"
-          onPress={() => navigate('CardFormContainer')}
+          onPress={() => navigate('Card')}
         />
       </View>
     );

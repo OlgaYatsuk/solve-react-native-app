@@ -2,22 +2,19 @@ import React from  'react';
 import { View, Text, Image } from 'react-native';
 import { Card } from 'react-native-elements';
 
-const SwipeCard = ({ key, title, formattedRelativeTime, snippet, company }) => {
+const SwipeCard = (props) => {
   return (
-    <Card title={title} key={key}>
+    <Card style={props.style} title={props.title} key={props.key}>
       <View style={{ height: 300 }}>
         <Image
-          source={require('./assets/photo.jpg')}
+          source={{ uri: props.photo }}
           style={{ width: '100%', height: 300 }}
         />
       </View>
       <View style={styles.detailWrapper}>
-        <Text>{company}</Text>
-        <Text>{formattedRelativeTime}</Text>
+        <Text>{props.name}</Text>
+        <Text>{props.name}</Text>
       </View>
-      <Text numberOfLines={4}>
-        {snippet.replace(/<b>/g, '').replace(/<\/b>/g, '')}
-      </Text>
     </Card>
   );
 };
