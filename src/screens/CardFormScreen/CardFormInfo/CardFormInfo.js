@@ -50,7 +50,7 @@ const CardFormInfo = ({cardType, firstName, lastName, creditCardNumber, isError,
     );
   }
   return <View/>;
-}
+};
 
 
 const styles = StyleSheet.create({

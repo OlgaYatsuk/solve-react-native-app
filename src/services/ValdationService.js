@@ -12,9 +12,8 @@ const validation = (
   val3: string,
   val4: string,
   val5: string,
-  func: Function,
 ) => {
-  return func.then(() => {
+  return callAPI().then(() => {
     if (
       val1.length === 16 &&
       val2 !== undefined &&
@@ -29,12 +28,12 @@ const validation = (
   });
 };
 
-export const serverValidation = (
+export default ValidationService = (
   val1: string,
   val2: string,
   val3: string,
   val4: string,
   val5: string,
 ) => {
-  return validation(val1, val2, val3, val4, val5, callAPI(false));
+  return validation(val1, val2, val3, val4, val5);
 };

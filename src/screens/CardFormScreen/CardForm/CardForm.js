@@ -21,7 +21,7 @@ type Props = {
   navigate: (v1: string) => void,
   isInputFieldValid: IsInputFieldValid,
   onSubmit?: () => void,
-  onCardFormInputChange: (v1?: string) => void,
+  onCardFormInputChange: (v1: string) => void,
 };
 
 const CardForm = ({isLoading, isSubmiting, onCardFormInputChange, navigate, isInputFieldValid, onSubmit} : Props) => {
@@ -90,7 +90,7 @@ const CardForm = ({isLoading, isSubmiting, onCardFormInputChange, navigate, isIn
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   Form: {

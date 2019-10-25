@@ -82,9 +82,9 @@ class CardFormContainer extends Component<Props, State> {
     },
   };
 
-  handleCardFormInputChange = (name: string) => (
+  handleCardFormInputChange = (name: string):void => (
     event?: SyntheticEvent<HTMLInputElement>,
-  ) => {
+  ):void => {
     const value = event.nativeEvent.text;
     const regex = new RegExp(validationRegEx[name]);
 
@@ -132,6 +132,7 @@ class CardFormContainer extends Component<Props, State> {
       secretQuestion,
     );
   };
+
 
   render() {
     const {isSubmiting, isInputFieldValid} = this.state;

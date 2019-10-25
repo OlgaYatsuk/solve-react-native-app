@@ -7,12 +7,12 @@
  */
 
 import React from 'react';
-import WelcomeScreen from './src/components/WelcomeScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import Card from './src/components/CardForm/Card';
-import SuccessScreen from './src/components/SuccessScreen';
-import UsersListContainer from './src/components/UsersList/UsersListContainer';
+import CardFormScreen from './src/screens/CardFormScreen/CardFormScreen';
+import SuccessScreen from './src/screens/SuccessScreen';
+import UsersList from './src/screens/UsersListScreen';
 // import SwipeScreen from './src/components/SwipeScreen/SwipeScreen';
 // import SelectedCandidatesContainer from './src/components/SwipeScreen/SelectedCandidates/SelectedCandidatesContainer';
 // import SwipeContainer from './src/components/SwipeScreen/SwipeCard/SwipeCardContainer'
@@ -21,8 +21,8 @@ const RootStack = createStackNavigator(
   {
     WelcomeScreen: WelcomeScreen,
     SuccessScreen: SuccessScreen,
-    Card: Card,
-    UsersListContainer: UsersListContainer,
+    Card: CardFormScreen,
+    UsersListContainer: UsersList,
     // SwipeScreen: SwipeScreen,
   },
   {

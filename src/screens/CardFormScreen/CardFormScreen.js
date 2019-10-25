@@ -3,20 +3,21 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import CardFormContainer from './CardForm/CardFormContainer';
-import CardFormInfoContainer from './CardFormInfo/CardFormInfoContainer';
+import CardForm from './CardForm';
+import CardFormInfo from './CardFormInfo';
+
 type Props = {
   navigation: any,
 };
 type State = {};
 
-class Card extends Component<Props, State> {
+class CardFormScreen extends Component<Props, State> {
   render() {
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.BlueView}>
-        <CardFormContainer navigate={navigate} />
-        <CardFormInfoContainer />
+        <CardForm navigate={navigate} />
+        <CardFormInfo />
       </View>
     );
   }
@@ -28,4 +29,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Card;
+export default CardFormScreen;

@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {SafeAreaView} from 'react-native';
 import {NavigationScreenProps} from 'react-navigation';
-import SwipeCardContainer from './SwipeCard/SwipeCardContainer';
-import SwipeToolbarContainer from './SwipeToolbar/SwipeToolbarContainer';
-import SelectedCandidatesContainer from './SelectedCandidates/SelectedCandidatesContainer';
+import SwipeCardContainer from './components/SwipeCard/SwipeCardContainer';
+import SwipeToolbarContainer from './components/SwipeToolbar/SwipeToolbarContainer';
+import SelectedCandidatesContainer from './components/SelectedCandidates/SelectedCandidatesContainer';
 
 type State = {
   likedCandidatesCounter: number,
