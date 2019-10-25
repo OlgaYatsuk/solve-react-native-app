@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 // @flow
-const callAPI = (data: boolean): Promise<any> => {
+const callAPI = <T>(data: T): Promise<T> => {
   return new Promise(resolve => {
     setTimeout(() => resolve(data), 2000);
   });
@@ -28,7 +28,7 @@ const validation = (
   });
 };
 
-export default ValidationService = (
+export const ValidationService = (
   val1: string,
   val2: string,
   val3: string,

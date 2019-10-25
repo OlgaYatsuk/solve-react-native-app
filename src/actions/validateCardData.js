@@ -1,5 +1,5 @@
 // // @flow
-import ValdationService from '../services/ValdationService';
+import {ValidationService} from '../services/ValidationService';
 
 import {
   VALIDATION_STATUS_REQUEST,
@@ -15,11 +15,11 @@ export const validateCardData = (
   val6: string,
 ) => (dispatch: ({type: string}) => void) => {
   dispatch({type: VALIDATION_STATUS_REQUEST});
-  return ValdationService(val2, val3, val4, val5, val6)
+  return ValidationService(val2, val3, val4, val5, val6)
     .then(() => {
       dispatch({type: VALIDATION_STATUS_SUCCESS});
     })
-    .catch(err => {
-      dispatch({type: VALIDATION_STATUS_FAILURE, err});
+    .catch(error => {
+      dispatch({type: VALIDATION_STATUS_FAILURE, error});
     });
 };

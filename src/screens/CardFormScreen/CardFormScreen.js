@@ -9,9 +9,8 @@ import CardFormInfo from './CardFormInfo';
 type Props = {
   navigation: any,
 };
-type State = {};
 
-class CardFormScreen extends Component<Props, State> {
+class CardFormScreen extends Component<Props> {
   render() {
     const {navigate} = this.props.navigation;
     return (

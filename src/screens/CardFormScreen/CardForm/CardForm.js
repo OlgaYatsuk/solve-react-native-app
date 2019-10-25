@@ -28,6 +28,7 @@ const CardForm = ({isLoading, isSubmiting, onCardFormInputChange, navigate, isIn
   const getInputClassName = (name: string) => {
     return cn(styles, 'Input', {
       InputError: isSubmiting && !isInputFieldValid[name],
+      InputDisabled: isSubmiting && isLoading,
       null: isSubmiting && isInputFieldValid[name],
     });
   };
@@ -103,12 +104,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 12,
     borderRadius: 8,
+    borderColor: '#fff',
+    borderWidth: 1,
     margin: 8,
     backgroundColor: '#fff',
   },
 
   InputError: {
     borderColor: 'red',
+    borderWidth: 1,
+  },
+
+  InputDisabled: {
+    backgroundColor: '#eeeeee',
+    borderColor: '#eeeeee',
     borderWidth: 1,
   },
 

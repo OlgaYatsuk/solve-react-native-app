@@ -2,11 +2,12 @@
 
 import React, {Component} from 'react';
 import {Text, View, Button} from 'react-native';
-import {NavigationScreenProps} from 'react-navigation';
+import { NavigationState, NavigationScreenProp } from 'react-navigation';
 
-type Props = NavigationScreenProps & {
-  navigation: Object,
+type Props = {
+  navigation: NavigationScreenProp<NavigationState>
 };
+
 
 class SuccessScreen extends Component<Props> {
   render() {

@@ -10,6 +10,8 @@ type User = {
 };
 
 const UsersList = ({users} : {users : User[]}) => {
+  const keyExtractor = item => item.dob.date;
+
   return (
     <View style={styles.BlueView}>
       <Text style={styles.Title}>
@@ -18,7 +20,7 @@ const UsersList = ({users} : {users : User[]}) => {
       </Text>
       <FlatList
         style={styles.FlatList}
-        windowSize={15}
+        windowSize={2}
         data={users}
         renderItem={({item}) => (
           <View style={styles.Card}>
@@ -31,7 +33,7 @@ const UsersList = ({users} : {users : User[]}) => {
             </View>
           </View>
         )}
-        keyExtractor={item => item.dob.date}
+        keyExtractor={keyExtractor}
       />
     </View>
   );
