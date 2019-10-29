@@ -4,14 +4,26 @@ import React from 'react';
 import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
 
 type Props = {
-  cardType?: string, firstName?: string, lastName?: string, creditCardNumber?: string, isError?: boolean, isLoading?: boolean
+  cardType?: string,
+  firstName?: string,
+  lastName?: string,
+  creditCardNumber?: string,
+  isError?: boolean,
+  isLoading?: boolean,
 };
 
-const CardFormInfo = ({cardType, firstName, lastName, creditCardNumber, isError, isLoading} : Props) => {
+const CardFormInfo = ({
+  cardType,
+  firstName,
+  lastName,
+  creditCardNumber,
+  isError,
+  isLoading,
+}: Props) => {
   if (isLoading) {
     return (
       <View>
-        <ActivityIndicator size="large"/>
+        <ActivityIndicator size="large" />
       </View>
     );
   }
@@ -49,9 +61,8 @@ const CardFormInfo = ({cardType, firstName, lastName, creditCardNumber, isError,
       </View>
     );
   }
-  return <View/>;
+  return <View />;
 };
-
 
 const styles = StyleSheet.create({
   ErrorText: {

@@ -2,7 +2,7 @@
 
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import {createLogger} from 'redux-logger'
+import {createLogger} from 'redux-logger';
 import {cardDataReducer} from '../reducers/cardDataReducer';
 import {validationStatusReducer} from '../reducers/validationStatusReducer';
 

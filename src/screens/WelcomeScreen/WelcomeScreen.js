@@ -2,13 +2,13 @@
 
 import React, {Component} from 'react';
 import {Text, View, Button} from 'react-native';
-import { NavigationState, NavigationScreenProp } from 'react-navigation';
+import {NavigationState, NavigationScreenProp} from 'react-navigation';
 
 type Props = {
-  navigation: NavigationScreenProp<NavigationState>
+  navigation: NavigationScreenProp<NavigationState>,
 };
 
-class WelcomeScreen extends Component<Props>  {
+class WelcomeScreen extends Component<Props> {
   render() {
     const {navigate} = this.props.navigation;
 

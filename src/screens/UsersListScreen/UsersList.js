@@ -4,12 +4,12 @@ import React from 'react';
 import {FlatList, View, Text, Image, StyleSheet} from 'react-native';
 
 type User = {
-  picture: { large: string },
-  name: { first: string, last: string },
-  dob: { age: string, date: string },
+  picture: {large: string},
+  name: {first: string, last: string},
+  dob: {age: string, date: string},
 };
 
-const UsersList = ({users} : {users : User[]}) => {
+const UsersList = ({users}: {users: User[]}) => {
   const keyExtractor = item => item.dob.date;
 
   return (
@@ -24,7 +24,7 @@ const UsersList = ({users} : {users : User[]}) => {
         data={users}
         renderItem={({item}) => (
           <View style={styles.Card}>
-            <Image style={styles.Image} source={{uri: item.picture.large}}/>
+            <Image style={styles.Image} source={{uri: item.picture.large}} />
             <View>
               <Text style={styles.UserName}>
                 {item.name.first} {item.name.last}

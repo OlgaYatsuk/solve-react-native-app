@@ -12,6 +12,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import CardFormScreen from './src/screens/CardFormScreen/CardFormScreen';
 import SuccessScreen from './src/screens/SuccessScreen';
+import FlatListTest from './src/screens/FlatList';
 import UsersList from './src/screens/UsersListScreen';
 // import SwipeScreen from './src/components/SwipeScreen/SwipeScreen';
 // import SelectedCandidatesContainer from './src/components/SwipeScreen/SelectedCandidates/SelectedCandidatesContainer';
@@ -23,10 +24,11 @@ const RootStack = createStackNavigator(
     SuccessScreen: SuccessScreen,
     Card: CardFormScreen,
     UsersListContainer: UsersList,
+    FlatListTest: FlatListTest,
     // SwipeScreen: SwipeScreen,
   },
   {
-    initialRouteName: 'WelcomeScreen',
+    initialRouteName: 'FlatListTest',
   },
 );
 //

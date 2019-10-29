@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import cn from 'react-native-classnames';
+import {NavigationState, NavigationScreenProp} from 'react-navigation';
 
 type IsInputFieldValid = {
   [key: string]: boolean,
@@ -24,7 +25,14 @@ type Props = {
   onCardFormInputChange: (v1: string) => void,
 };
 
-const CardForm = ({isLoading, isSubmiting, onCardFormInputChange, navigate, isInputFieldValid, onSubmit} : Props) => {
+const CardForm = ({
+  isLoading,
+  isSubmiting,
+  onCardFormInputChange,
+  navigate,
+  isInputFieldValid,
+  onSubmit,
+}: Props) => {
   const getInputClassName = (name: string) => {
     return cn(styles, 'Input', {
       InputError: isSubmiting && !isInputFieldValid[name],

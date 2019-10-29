@@ -44,7 +44,6 @@ type Props = {
   onSubmit: () => void,
 };
 
-
 type State = {
   creditCardNumber?: string,
   cvv?: string,
@@ -83,9 +82,9 @@ class CardFormContainer extends Component<Props, State> {
     },
   };
 
-  handleCardFormInputChange = (name: string):function => (
+  handleCardFormInputChange = (name: string) => (
     event: SyntheticEvent<HTMLInputElement>,
-  ):void => {
+  ): void => {
     const value = event.nativeEvent.text;
     const regex = new RegExp(validationRegEx[name]);
 
@@ -133,7 +132,6 @@ class CardFormContainer extends Component<Props, State> {
       secretQuestion,
     );
   };
-
 
   render() {
     const {isSubmiting, isInputFieldValid} = this.state;
