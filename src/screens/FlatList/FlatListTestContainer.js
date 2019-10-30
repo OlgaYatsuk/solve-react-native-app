@@ -59,9 +59,15 @@ class FlatListTestContainer extends Component<Props, State> {
   };
 
   handleItemSelect = (item) => {
-    item.isSelected = !item.isSelected;
+    const {users} = this.state;
+
+    const usersWithSelectedItems = users.map((user) => {
+      user.id === item.id ? user.isSelected = !item.isSelected : user;
+      return user
+    });
 
     this.setState({
+      users: usersWithSelectedItems,
       isRemoveButtonDisabled: false
     })
   };
