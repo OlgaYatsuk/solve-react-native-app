@@ -45,12 +45,12 @@ const FlatListTest = ({
   isRemoveButtonDisabled: boolean,
   isAddItemButtonDisabled: boolean,
 }) => {
-  const renderItem = (data) => {
+  const renderItem = ({item}) => {
     return (
       <TouchableOpacity
-        style={[styles.list, data.item.selectedClass]}
-        onPress={() => onItemSelect(data)}>
-        <Text style={styles.LightText}>{data.item.title}</Text>
+        style={!item.isSelected ? styles.List : [styles.List, styles.selected]}
+        onPress={() => onItemSelect(item)}>
+        <Text style={styles.LightText}>{item.title}</Text>
       </TouchableOpacity>
     );
   };
@@ -76,6 +76,7 @@ const FlatListTest = ({
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   BlueView: {
     backgroundColor: '#dde6f6',
@@ -93,6 +94,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     zIndex: -1,
+  },
+  selected: {
+    backgroundColor: '#c1ceff'
   },
   LightText: {
     color: '#000',

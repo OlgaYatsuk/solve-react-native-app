@@ -1,7 +1,6 @@
 // @flow
 
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
 
 import FlatListTest from './FlatListTest';
 
@@ -44,7 +43,6 @@ class FlatListTestContainer extends Component<Props, State> {
       .then(responseJson => {
         responseJson = responseJson.map(item => {
           item.isSelected = false;
-          item.selectedClass = styles.list;
           return item;
         });
 
@@ -60,30 +58,12 @@ class FlatListTestContainer extends Component<Props, State> {
       });
   };
 
-  handleItemSelect = ({
-    item,
-  }: {
-    item: {
-      body: string,
-      id: number,
-      isSelected: boolean,
-      selectedClass: Object,
-      title: string,
-      userId: number,
-    },
-  }) => {
-    const {users} = this.state;
+  handleItemSelect = (item) => {
     item.isSelected = !item.isSelected;
-    item.selectedClass = item.isSelected ? styles.selected : styles.list;
-
-    const index = users.findIndex(usersItem => item.id === usersItem.id);
-
-    users[index] = item;
 
     this.setState({
-      users: users,
-      isRemoveButtonDisabled: false,
-    });
+      isRemoveButtonDisabled: false
+    })
   };
 
   handleRemoveItem = () => {
@@ -152,23 +132,5 @@ class FlatListTestContainer extends Component<Props, State> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  List: {
-    paddingVertical: 5,
-    marginLeft: 15,
-    marginRight: 15,
-    height: 50,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#668aff',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  selected: {
-    backgroundColor: '#c1ceff'
-  }
-});
 
 export default FlatListTestContainer;
