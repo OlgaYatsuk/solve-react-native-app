@@ -11,21 +11,65 @@ import {
 
 import cn from 'react-native-classnames';
 import {NavigationState, NavigationScreenProp} from 'react-navigation';
-import useCard from '../useCard';
 
 type IsInputFieldValid = {
   [key: string]: boolean,
 };
 
-const CardForm = () => {
-  const {handleSubmit, isLoading, isError, isInputFieldValid, isSubmiting, validateCard, updateCard, handleCardFormInputChange} = useCard();
+type Props = {
+  isSubmiting: boolean,
+  isLoading: boolean,
+  navigate: (v1: string) => void,
+  isInputFieldValid: IsInputFieldValid,
+  onSubmit?: () => void,
+  onCardFormInputChange: (v1: string) => void,
+};
 
+const CardForm = ({
+                    isLoading,
+                    isSubmiting,
+                    onCardFormInputChange,
+                    navigate,
+                    isInputFieldValid,
+                    onSubmit,
+                  }: Props) => {
   const getInputClassName = (name: string) => {
     return cn(styles, 'Input', {
       InputError: isSubmiting && !isInputFieldValid[name],
       InputDisabled: isSubmiting && isLoading,
       null: isSubmiting && isInputFieldValid[name],
     });
+  };
+
+  handleSubmit = () => {
+    const {validateCardData, updateCardData} = this.props;
+    const {
+      firstName,
+      lastName,
+      creditCardNumber,
+      expirationDate,
+      secretAnswer,
+      secretQuestion,
+      cvv,
+    } = this.state;
+
+    validateCardData(
+      creditCardNumber,
+      expirationDate,
+      cvv,
+      firstName,
+      lastName,
+    );
+
+    updateCardData(
+      creditCardNumber,
+      expirationDate,
+      cvv,
+      firstName,
+      lastName,
+      secretAnswer,
+      secretQuestion,
+    );
   };
 
   return (
@@ -35,59 +79,58 @@ const CardForm = () => {
         editable={!isLoading}
         placeholder="Credit card number"
         style={getInputClassName('creditCardNumber')}
-        onChange={handleCardFormInputChange('creditCardNumber')}
+        onChange={onCardFormInputChange('creditCardNumber')}
       />
       <View>
         <TextInput
           editable={!isLoading}
           style={getInputClassName('expirationDate')}
-          onChange={handleCardFormInputChange('expirationDate')}
+          onChange={onCardFormInputChange('expirationDate')}
           placeholder="Expiration Date"
         />
         <TextInput
           editable={!isLoading}
           placeholder="CVV"
           style={getInputClassName('cvv')}
-          onChange={handleCardFormInputChange('cvv')}
+          onChange={onCardFormInputChange('cvv')}
         />
       </View>
       <TextInput
         editable={!isLoading}
         placeholder="First Name"
         style={getInputClassName('firstName')}
-        onChange={handleCardFormInputChange('firstName')}
+        onChange={onCardFormInputChange('firstName')}
       />
       <TextInput
         editable={!isLoading}
         placeholder="Last Name"
         style={getInputClassName('lastName')}
-        onChange={handleCardFormInputChange('lastName')}
+        onChange={onCardFormInputChange('lastName')}
       />
       <TextInput
         editable={!isLoading}
         placeholder="Secret question"
         style={getInputClassName('secretQuestion')}
-        onChange={handleCardFormInputChange('secretQuestion')}
+        onChange={onCardFormInputChange('secretQuestion')}
       />
       <TextInput
         editable={!isLoading}
         placeholder="Secret answer"
         style={getInputClassName('secretAnswer')}
-        onChange={handleCardFormInputChange('secretAnswer')}
+        onChange={onCardFormInputChange('secretAnswer')}
       />
-      <TouchableHighlight style={styles.Button} onPress={handleSubmit}>
+      <TouchableHighlight style={styles.Button} onPress={onSubmit}>
         <Text style={styles.ButtonText}>Submit</Text>
       </TouchableHighlight>
+      <Button
+        onPress={() => {
+          navigate('UsersListContainer');
+        }}
+        title={'Show other people who have paid'}
+      />
     </View>
   );
 };
-
-{/*<Button*/}
-{/*onPress={() => {*/}
-// navigate('UsersListContainer');
-// }}
-{/*title={'Show other people who have paid'}*/}
-{/*/>*/}
 
 const styles = StyleSheet.create({
   Form: {

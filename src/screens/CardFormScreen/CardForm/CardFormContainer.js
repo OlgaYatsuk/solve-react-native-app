@@ -98,41 +98,6 @@ class CardFormContainer extends Component<Props, State> {
     });
   };
 
-  handleSubmit = () => {
-    const {validateCardData, updateCardData} = this.props;
-    const {
-      firstName,
-      lastName,
-      creditCardNumber,
-      expirationDate,
-      secretAnswer,
-      secretQuestion,
-      cvv,
-    } = this.state;
-
-    this.setState({
-      isSubmiting: true,
-    });
-
-    validateCardData(
-      creditCardNumber,
-      expirationDate,
-      cvv,
-      firstName,
-      lastName,
-    );
-
-    updateCardData(
-      creditCardNumber,
-      expirationDate,
-      cvv,
-      firstName,
-      lastName,
-      secretAnswer,
-      secretQuestion,
-    );
-  };
-
   render() {
     const {isSubmiting, isInputFieldValid} = this.state;
     const {isError, isLoading, navigate} = this.props;
@@ -169,8 +134,3 @@ const mapStateToProps = state => {
       ValidationStatus.Request,
   };
 };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CardFormContainer);

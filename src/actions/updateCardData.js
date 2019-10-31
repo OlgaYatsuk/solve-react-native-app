@@ -1,25 +1,24 @@
 //@flow
 /*eslint-disable*/
 
-export const updateCardData = (
-  creditCardNumber: string,
-  date: string,
-  cvv: string,
-  firstName: string,
-  expirationDate: string,
-  lastName: string,
-  cardType: string,
-) => {
+export const updateCardData = (     creditCardNumber,
+                                    expirationDate,
+                                    cvv,
+                                    firstName,
+                                    lastName,
+                                    secretAnswer,
+                                    secretQuestion) => {
+
   return {
     type: 'UPDATE_CARD_DATA',
     payload: {
       creditCardNumber,
-      date,
-      cvv,
       expirationDate,
+      cvv,
       firstName,
       lastName,
-      cardType,
+      secretAnswer,
+      secretQuestion,
     },
   };
 };

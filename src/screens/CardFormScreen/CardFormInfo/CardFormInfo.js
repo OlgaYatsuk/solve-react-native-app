@@ -2,24 +2,15 @@
 
 import React from 'react';
 import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
+import useCard from "../useCard";
 
-type Props = {
-  cardType?: string,
-  firstName?: string,
-  lastName?: string,
-  creditCardNumber?: string,
-  isError?: boolean,
-  isLoading?: boolean,
-};
+const CardFormInfo = () => {
+  const {isLoading, isSubmiting, isError, firstName,
+    lastName,
+    creditCardNumber } = useCard();
+  console.log(isSubmiting);
 
-const CardFormInfo = ({
-  cardType,
-  firstName,
-  lastName,
-  creditCardNumber,
-  isError,
-  isLoading,
-}: Props) => {
+
   if (isLoading) {
     return (
       <View>
@@ -38,7 +29,8 @@ const CardFormInfo = ({
     );
   }
 
-  if (!!creditCardNumber && !!firstName && !isError) {
+
+  if (isSubmiting && !isError) {
     return (
       <View style={styles.InfoView}>
         <Text style={styles.Title}>Voilà! Here is your information 🍾</Text>
@@ -50,10 +42,10 @@ const CardFormInfo = ({
           <Text>Last Name: </Text>
           {lastName}
         </Text>
-        <Text style={styles.Text}>
-          <Text>Card type: </Text>
-          {cardType}
-        </Text>
+        {/*<Text style={styles.Text}>*/}
+          {/*<Text>Card type: </Text>*/}
+          {/*{cardType}*/}
+        {/*</Text>*/}
         <Text style={styles.Text}>
           <Text>Last 4 digits of your card: **** **** ****</Text>
           {creditCardNumber.slice(12, 16)}

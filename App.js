@@ -28,7 +28,7 @@ const RootStack = createStackNavigator(
     // SwipeScreen: SwipeScreen,
   },
   {
-    initialRouteName: 'FlatListTest',
+    initialRouteName: 'Card',
   },
 );
 //
