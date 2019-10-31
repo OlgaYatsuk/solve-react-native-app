@@ -1,55 +1,18 @@
 // @flow
 
 import React from 'react';
-import {FlatList, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {FlatList, TextInput, Button, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
-import FlatListTestHeader from './components/FlatListTestHeader';
+import useUsers from './useUsers';
 
-type User = {
-  title: string,
-  userId: number,
-  id: number,
-  title: string,
-  body: string,
-  isSelected: boolean,
-  selectedClass: Object,
-};
+export const FlatListTest = () => {
+  const {users, handleItemSelect, handleRemoveItem, handleItemAdd, value, handleInputChange, isRemoveButtonDisabled, isAddButtonDisabled} = useUsers();
 
-const FlatListTest = ({
-  users,
-  onItemAdd,
-  onRemoveItem,
-  isAddItemButtonDisabled,
-  isRemoveButtonDisabled,
-  onInputChange,
-  onItemSelect,
-  inputValue,
-  isError
-}: {
-  users: User[],
-  inputValue?: string,
-  isError: boolean,
-  onItemSelect: (item: {
-    item: {
-      body: string,
-      id: number,
-      isSelected: boolean,
-      selectedClass: Object,
-      title: string,
-      userId: number,
-    },
-  }) => void,
-  onRemoveItem: () => void,
-  onItemAdd: () => void,
-  onInputChange: (value?: string) => string,
-  isRemoveButtonDisabled: boolean,
-  isAddItemButtonDisabled: boolean,
-}) => {
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
-        style={!item.isSelected ? styles.List : [styles.List, styles.selected]}
-        onPress={() => onItemSelect(item)}>
+        onPress={() => handleItemSelect(item)}
+        style={!item.isSelected ? styles.List : [styles.List, styles.selected]}>
         <Text style={styles.LightText}>{item.title}</Text>
       </TouchableOpacity>
     );
@@ -57,21 +20,32 @@ const FlatListTest = ({
 
   return (
     <View style={styles.BlueView}>
-      {isError && <Text style={styles.ErrorStyle}>Something went wrong...</Text>}
+      <View style={styles.FlatListHeader}>
+        <Text style={styles.Title}>How do you like this?</Text>
+        <TextInput
+          onChangeText={handleInputChange}
+          value={value}
+          style={styles.Input}
+        />
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <Button
+            onPress={handleItemAdd}
+            value={value}
+            disabled={isAddButtonDisabled}
+            title={'Add item'}
+          />
+          <Button
+            onPress={handleRemoveItem}
+            disabled={isRemoveButtonDisabled}
+            title={'Remove item'}
+          />
+        </View>
+      </View>
       <FlatList
         data={users}
         renderItem={user => renderItem(user)}
-        ListHeaderComponent={
-          <FlatListTestHeader
-            isAddItemButtonDisabled={isAddItemButtonDisabled}
-            onInputChange={onInputChange}
-            inputValue={inputValue}
-            onItemAdd={onItemAdd}
-            onRemoveItem={onRemoveItem}
-            isRemoveButtonDisabled={isRemoveButtonDisabled}
-          />
-        }
         keyExtractor={item => item.id.toString()}
+
       />
     </View>
   );
@@ -108,7 +82,28 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontSize: 18
+  },
+  FlatListHeader: {
+    margin: 20,
+  },
+  Title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000',
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginBottom: 15,
+  },
+  Input: {
+    fontSize: 16,
+    padding: 12,
+    borderRadius: 8,
+    borderColor: '#fff',
+    width: 300,
+    alignSelf: 'center',
+    borderWidth: 1,
+    margin: 8,
+    backgroundColor: '#fff',
   }
 });
 
-export default FlatListTest;

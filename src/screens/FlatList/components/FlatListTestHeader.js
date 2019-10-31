@@ -1,39 +1,27 @@
-// @flow
-
 import React from 'react';
 import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
+import useUsers from '../useUsers';
 
-const FlatListTestHeader = ({
-  onItemAdd,
-  onRemoveItem,
-  isAddItemButtonDisabled,
-  isRemoveButtonDisabled,
-  onInputChange,
-  inputValue,
-}: {
-  onInputChange: (value: string) => string,
-  inputValue?: string,
-  onRemoveItem: () => void,
-  onItemAdd: () => void,
-  isAddItemButtonDisabled: boolean,
-  isRemoveButtonDisabled: boolean,
-}) => {
+const FlatListTestHeader = () => {
+  const {handleRemoveItem, handleItemAdd, value, handleInputChange} = useUsers();
+
   return (
     <View style={styles.FlatListHeader}>
       <Text style={styles.Title}>How do you like this?</Text>
       <TextInput
-        onChangeText={onInputChange}
-        value={inputValue}
+        onChangeText={handleInputChange}
+        value={value}
         style={styles.Input}
       />
       <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
         <Button
-          onPress={onItemAdd}
+          onPress={handleItemAdd}
+          value={value}
           disabled={isAddItemButtonDisabled}
           title={'Add item'}
         />
         <Button
-          onPress={onRemoveItem}
+          onPress={handleRemoveItem}
           disabled={isRemoveButtonDisabled}
           title={'Remove item'}
         />

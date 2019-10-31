@@ -1,8 +1,6 @@
-// @flow
-
 import React, {Component} from 'react';
 
-import FlatListTest from './FlatListTest';
+import FlatListTest from './FlatListTest2';
 
 type Props = {};
 
