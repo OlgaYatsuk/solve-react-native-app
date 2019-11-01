@@ -23,7 +23,7 @@ const RootStack = createStackNavigator(
     WelcomeScreen: WelcomeScreen,
     SuccessScreen: SuccessScreen,
     Card: CardFormScreen,
-    UsersListContainer: UsersList,
+    UsersList: UsersList,
     FlatListTest: FlatListTest,
     // SwipeScreen: SwipeScreen,
   },

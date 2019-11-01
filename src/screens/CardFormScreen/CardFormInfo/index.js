@@ -1,1 +1,1 @@
-export {default} from './CardFormInfoContainer';
+export {default} from '../../archive/CardFormInfoContainer';

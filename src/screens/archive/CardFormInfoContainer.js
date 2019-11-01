@@ -2,9 +2,9 @@
 
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import CardFormInfo from './CardFormInfo';
-import {updateCardData} from '../../../actions/updateCardData';
-import {ValidationStatus} from '../../../utils/validationStatus';
+import CardFormInfo from '../CardFormScreen/CardFormInfo/CardFormInfo';
+import {updateCardData} from '../../actions/updateCardData';
+import {ValidationStatus} from '../../utils/validationStatus';
 
 type State = {
   cardType?: string,

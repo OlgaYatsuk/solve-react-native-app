@@ -3,7 +3,12 @@ import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
 import useUsers from '../useUsers';
 
 const FlatListTestHeader = () => {
-  const {handleRemoveItem, handleItemAdd, value, handleInputChange} = useUsers();
+  const {
+    handleRemoveItem,
+    handleItemAdd,
+    value,
+    handleInputChange,
+  } = useUsers();
 
   return (
     <View style={styles.FlatListHeader}>

@@ -1,12 +1,29 @@
 // @flow
 
 import React from 'react';
-import {FlatList, TextInput, Button, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
 
 import useUsers from './useUsers';
 
 export const FlatListTest = () => {
-  const {users, handleItemSelect, handleRemoveItem, handleItemAdd, value, handleInputChange, isRemoveButtonDisabled, isAddButtonDisabled} = useUsers();
+  const {
+    users,
+    handleItemSelect,
+    handleRemoveItem,
+    handleItemAdd,
+    value,
+    handleInputChange,
+    isRemoveButtonDisabled,
+    isAddButtonDisabled,
+  } = useUsers();
 
   const renderItem = ({item}) => {
     return (
@@ -45,7 +62,6 @@ export const FlatListTest = () => {
         data={users}
         renderItem={user => renderItem(user)}
         keyExtractor={item => item.id.toString()}
-
       />
     </View>
   );
@@ -70,7 +86,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   selected: {
-    backgroundColor: '#c1ceff'
+    backgroundColor: '#c1ceff',
   },
   LightText: {
     color: '#000',
@@ -81,7 +97,7 @@ const styles = StyleSheet.create({
   ErrorStyle: {
     textAlign: 'center',
     marginTop: 20,
-    fontSize: 18
+    fontSize: 18,
   },
   FlatListHeader: {
     margin: 20,
@@ -104,6 +120,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 8,
     backgroundColor: '#fff',
-  }
+  },
 });
-

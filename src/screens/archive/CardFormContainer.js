@@ -4,11 +4,11 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import {connect} from 'react-redux';
 
-import CardForm from './CardForm';
+import CardForm from '../CardFormScreen/CardForm/CardForm';
 
-import {updateCardData} from '../../../actions/updateCardData';
-import {validateCardData} from '../../../actions/validateCardData';
-import {ValidationStatus} from '../../../utils/validationStatus';
+import {updateCardData} from '../../actions/updateCardData';
+import {validateCardData} from '../../actions/validateCardData';
+import {ValidationStatus} from '../../utils/validationStatus';
 
 //rules for validation
 const validationRegEx = {
@@ -134,3 +134,8 @@ const mapStateToProps = state => {
       ValidationStatus.Request,
   };
 };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CardFormInfo);

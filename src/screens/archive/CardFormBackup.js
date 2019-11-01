@@ -26,13 +26,13 @@ type Props = {
 };
 
 const CardForm = ({
-                    isLoading,
-                    isSubmiting,
-                    onCardFormInputChange,
-                    navigate,
-                    isInputFieldValid,
-                    onSubmit,
-                  }: Props) => {
+  isLoading,
+  isSubmiting,
+  onCardFormInputChange,
+  navigate,
+  isInputFieldValid,
+  onSubmit,
+}: Props) => {
   const getInputClassName = (name: string) => {
     return cn(styles, 'Input', {
       InputError: isSubmiting && !isInputFieldValid[name],

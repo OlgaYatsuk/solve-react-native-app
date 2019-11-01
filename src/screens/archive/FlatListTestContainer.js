@@ -19,7 +19,7 @@ type State = {
   inputValue?: string,
   isRemoveButtonDisabled: boolean,
   isAddItemButtonDisabled: boolean,
-  isError: boolean
+  isError: boolean,
 };
 
 class FlatListTestContainer extends Component<Props, State> {
@@ -50,24 +50,24 @@ class FlatListTestContainer extends Component<Props, State> {
       })
       .catch(error => {
         this.setState({
-          isError: true
+          isError: true,
         });
-        console.log(error)
+        console.log(error);
       });
   };
 
-  handleItemSelect = (item) => {
+  handleItemSelect = item => {
     const {users} = this.state;
 
-    const usersWithSelectedItems = users.map((user) => {
-      user.id === item.id ? user.isSelected = !item.isSelected : user;
-      return user
+    const usersWithSelectedItems = users.map(user => {
+      user.id === item.id ? (user.isSelected = !item.isSelected) : user;
+      return user;
     });
 
     this.setState({
       users: usersWithSelectedItems,
-      isRemoveButtonDisabled: false
-    })
+      isRemoveButtonDisabled: false,
+    });
   };
 
   handleRemoveItem = () => {
@@ -118,7 +118,7 @@ class FlatListTestContainer extends Component<Props, State> {
       isAddItemButtonDisabled,
       isRemoveButtonDisabled,
       inputValue,
-      isError
+      isError,
     } = this.state;
 
     return (

@@ -19,7 +19,7 @@ export const validationStatusReducer = (
     case VALIDATION_STATUS_REQUEST:
       return {
         ...state,
-        isFormShown: true,
+        isFormShown: false,
         validationStatus: ValidationStatus.Request,
       };
 

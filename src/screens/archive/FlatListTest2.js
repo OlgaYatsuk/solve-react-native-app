@@ -22,7 +22,7 @@ const FlatListTest = ({
   onInputChange,
   onItemSelect,
   inputValue,
-  isError
+  isError,
 }: {
   users: User[],
   inputValue?: string,
@@ -55,7 +55,9 @@ const FlatListTest = ({
 
   return (
     <View style={styles.BlueView}>
-      {isError && <Text style={styles.ErrorStyle}>Something went wrong...</Text>}
+      {isError && (
+        <Text style={styles.ErrorStyle}>Something went wrong...</Text>
+      )}
       <FlatList
         data={users}
         renderItem={user => renderItem(user)}
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   selected: {
-    backgroundColor: '#c1ceff'
+    backgroundColor: '#c1ceff',
   },
   LightText: {
     color: '#000',
@@ -105,8 +107,8 @@ const styles = StyleSheet.create({
   ErrorStyle: {
     textAlign: 'center',
     marginTop: 20,
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 });
 
 export default FlatListTest;

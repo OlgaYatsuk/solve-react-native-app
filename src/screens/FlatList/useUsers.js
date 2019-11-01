@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
 
 type User = {
   id: number,
@@ -8,7 +8,7 @@ type User = {
   userId: number,
   title: string,
   body: string,
-  isSelected: boolean
+  isSelected: boolean,
 };
 
 const useUsers = () => {
@@ -28,20 +28,24 @@ const useUsers = () => {
         setUsers(responseJson);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
       });
   };
 
   const handleInputChange = useCallback((value: string) => {
     setValue(value);
-    setAddButtonEnabled(false)
+    setAddButtonEnabled(false);
   });
 
-  useEffect(() => {fetchData()}, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleItemSelect = (item: User) => {
-    const usersWithSelectedItems = users.map((user) => {
-      return user.id === item.id ? {...user, isSelected: !item.isSelected} : user;
+    const usersWithSelectedItems = users.map(user => {
+      return user.id === item.id
+        ? {...user, isSelected: !item.isSelected}
+        : user;
     });
 
     setUsers(usersWithSelectedItems);
@@ -61,20 +65,30 @@ const useUsers = () => {
       return;
     }
 
-    const newUsers = [{
-      title: value,
-      body: '',
-      userId: users.length + 1,
-      isSelected: false,
-      id: users.length + 1,
-    },
-      ...users
+    const newUsers = [
+      {
+        title: value,
+        body: '',
+        userId: users.length + 1,
+        isSelected: false,
+        id: users.length + 1,
+      },
+      ...users,
     ];
 
     setUsers(newUsers);
   }, [value]);
 
-  return { users, handleItemSelect, handleRemoveItem, handleItemAdd, value, handleInputChange, isRemoveButtonDisabled, isAddButtonDisabled };
+  return {
+    users,
+    handleItemSelect,
+    handleRemoveItem,
+    handleItemAdd,
+    value,
+    handleInputChange,
+    isRemoveButtonDisabled,
+    isAddButtonDisabled,
+  };
 };
 
 export default useUsers;

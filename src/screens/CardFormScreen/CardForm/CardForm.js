@@ -10,16 +10,19 @@ import {
 } from 'react-native';
 
 import cn from 'react-native-classnames';
-import {NavigationState, NavigationScreenProp} from 'react-navigation';
-import useCard from '../useCard';
+import useCard from './useCardForm';
+import {updateCardData} from '../../../actions/updateCardData';
+import {validateCardData} from '../../../actions/validateCardData';
+import {connect} from 'react-redux';
+import {ValidationStatus} from '../../../utils/validationStatus';
 
-type IsInputFieldValid = {
-  [key: string]: boolean,
-};
-
-const CardForm = () => {
-  const {handleSubmit, isLoading, isError, isInputFieldValid, isSubmiting, validateCard, updateCard, handleCardFormInputChange} = useCard();
-
+const CardForm = ({isLoading, updateCardData, validateCardData}) => {
+  const {
+    handleSubmit,
+    isInputFieldValid,
+    handleCardFormInputChange,
+    isSubmiting,
+  } = useCard(updateCardData, validateCardData);
   const getInputClassName = (name: string) => {
     return cn(styles, 'Input', {
       InputError: isSubmiting && !isInputFieldValid[name],
@@ -78,16 +81,30 @@ const CardForm = () => {
       <TouchableHighlight style={styles.Button} onPress={handleSubmit}>
         <Text style={styles.ButtonText}>Submit</Text>
       </TouchableHighlight>
+      {/*<Button onPress={() => {navigation.navigate('UsersList')}}*/}
+      {/*title={'Show other people who have paid'}*/}
+      {/*/>*/}
     </View>
   );
 };
 
-{/*<Button*/}
-{/*onPress={() => {*/}
-// navigate('UsersListContainer');
-// }}
-{/*title={'Show other people who have paid'}*/}
-{/*/>*/}
+const mapDispatchToProps = {
+  updateCardData,
+  validateCardData,
+};
+
+const mapStateToProps = state => {
+  return {
+    isLoading:
+      state.validationStatusReducer.validationStatus ===
+      ValidationStatus.Request,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CardForm);
 
 const styles = StyleSheet.create({
   Form: {
@@ -148,5 +165,3 @@ const styles = StyleSheet.create({
     lineHeight: 1.3,
   },
 });
-
-export default CardForm;
