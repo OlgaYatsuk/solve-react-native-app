@@ -2,8 +2,8 @@
 
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import CreateUserInfoCard from './CreateUserInfoCard';
 import UpdateUserInfoCard from './UpdateUserInfoCard';

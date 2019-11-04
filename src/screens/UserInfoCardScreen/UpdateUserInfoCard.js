@@ -9,36 +9,36 @@ import UserInfoUpdateResponse from './UserInfoResponses/UserInfoUpdateResponse';
 class UpdateUserInfoCard extends Component<Props> {
   state = {
     isEditable: true,
-    size: ''
+    size: '',
   };
 
   handleButtonClick = () => {
-
     //Put new data...
   };
 
-  handleSizeValueChange = (itemValue) => {
+  handleSizeValueChange = itemValue => {
     this.setState({
-      size: itemValue
-    })
+      size: itemValue,
+    });
   };
 
   handleSizeSelect = () => {
     this.setState({
-      isSizePickerVisible: !this.state.isSizePickerVisible
-    })
+      isSizePickerVisible: !this.state.isSizePickerVisible,
+    });
   };
 
   render() {
     return (
-      <UserInfoCard title={'Update existing information'}
-                    name={'Jumpsuit'}
-                    size={this.state.size}
-                    weight={'0.8'}
-                    onSizeSelect={this.handleSizeSelect}
-                    eventType={'Update'}
-                    onSizeValueChange={this.handleSizeValueChange}
-                    onButtonClick={this.handleButtonClick}
+      <UserInfoCard
+        title={'Update existing information'}
+        name={'Jumpsuit'}
+        size={this.state.size}
+        weight={'0.8'}
+        onSizeSelect={this.handleSizeSelect}
+        eventType={'Update'}
+        onSizeValueChange={this.handleSizeValueChange}
+        onButtonClick={this.handleButtonClick}
       />
     );
   }

@@ -6,9 +6,9 @@ const UserInfoUpdateResponse = () => {
     <View>
       <Text>Your data was updated.</Text>
       <Text>Thank you for using our app</Text>
-      <Button title={'back'}/>
+      <Button title={'back'} />
     </View>
-  )
+  );
 };
 
 export default UserInfoUpdateResponse;
