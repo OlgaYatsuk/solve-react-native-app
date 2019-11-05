@@ -14,8 +14,8 @@ import CardFormScreen from './src/screens/CardFormScreen/CardFormScreen';
 import SuccessScreen from './src/screens/SuccessScreen';
 import {FlatListTest} from './src/screens/FlatList';
 import UsersList from './src/screens/UsersListScreen';
-import UserInfoCardScreen from './src/screens/UserInfoCardScreen/';
-// import SwipeScreen from './src/components/SwipeScreen/SwipeScreen';
+import UserInfoCardScreen from './src/screens/UserInfoCardScreen';
+import SwipeScreen from './src/screens/SwipeScreen';
 // import SelectedCandidatesContainer from './src/components/SwipeScreen/SelectedCandidates/SelectedCandidatesContainer';
 // import SwipeContainer from './src/components/SwipeScreen/SwipeCard/SwipeCardContainer'
 
@@ -27,10 +27,10 @@ const RootStack = createStackNavigator(
     UsersList: UsersList,
     FlatListTest: FlatListTest,
     UserInfoCardScreen: UserInfoCardScreen,
-    // SwipeScreen: SwipeScreen,
+    SwipeScreen: SwipeScreen,
   },
   {
-    initialRouteName: 'UserInfoCardScreen',
+    initialRouteName: 'SwipeScreen',
   },
 );
 //

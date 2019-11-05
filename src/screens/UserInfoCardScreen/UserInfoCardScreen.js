@@ -2,22 +2,26 @@
 
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {createAppContainer} from 'react-navigation';
+import {createAppContainer, NavigationScreenProp, NavigationState} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import CreateUserInfoCard from './CreateUserInfoCard';
 import UpdateUserInfoCard from './UpdateUserInfoCard';
 
 type Props = {
-  navigation: any,
+  navigation: NavigationScreenProp<NavigationState>,
 };
+
 
 class UserInfoCardScreen extends Component<Props> {
   render() {
+    const {navigate} = this.props.navigation;
+    console.log('hello');
+
     return (
       <View style={styles.BlueView}>
-        <CreateUserInfoCard />
-        <UpdateUserInfoCard />
+        <CreateUserInfoCard navigate={navigate}/>
+        <UpdateUserInfoCard navigate={navigate}/>
       </View>
     );
   }

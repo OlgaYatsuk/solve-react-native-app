@@ -53,7 +53,15 @@ class SwipeCardContainer extends React.Component<State> {
       ? this.props.onSwipeRight(item)
       : this.props.onSwipeLeft(item);
     this.position.setValue({x: 0, y: 0});
-    this.setState({index: this.state.index + 1});
+
+    console.log();
+    this.setState({index: this.state.index + 1},
+      () => {
+        this.setState({
+          index:0
+        })
+      }
+    );
   };
 
   resetPosition = () => {
@@ -76,6 +84,12 @@ class SwipeCardContainer extends React.Component<State> {
   }
 
   renderNoMoreCards = () => {
+    // if (this.props.isReseting) {
+    //   this.setState({
+    //     index: 0
+    //   });
+    // }
+
     return (
       <Card title="No More cards">
         <Button
@@ -91,13 +105,13 @@ class SwipeCardContainer extends React.Component<State> {
 
   render() {
     const {users} = this.props;
-    if (this.state.index >= this.props.users.length) {
-      return this.renderNoMoreCards();
+
+    if (this.state.index >= users.length) {
+      return this.renderNoMoreCards()
     }
 
     return (
       <View style={styles.container}>
-        <View>
           {users.map((user, index) => {
             if (index < this.state.index) {
               return null;
@@ -106,6 +120,7 @@ class SwipeCardContainer extends React.Component<State> {
             if (index === this.state.index) {
               return (
                 <Animated.View
+                  key={user.email}
                   style={[this.getCardStyle(), styles.cardStyle, {zIndex: 99}]}
                   {...this._panResponder.panHandlers}>
                   <SwipeCard
@@ -132,7 +147,6 @@ class SwipeCardContainer extends React.Component<State> {
               </View>
             );
           })}
-        </View>
       </View>
     );
   }
@@ -141,7 +155,8 @@ class SwipeCardContainer extends React.Component<State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f1f4f6',
+    alignSelf: 'flex-start',
   },
   statusStyle: {
     padding: 15,
@@ -151,9 +166,12 @@ const styles = StyleSheet.create({
   },
   cardStyle: {
     position: 'absolute',
+    flex: 2,
+    backgroundColor: '#f1f4f6',
     width: SCREEN_WIDTH,
   },
   cardWrapper: {
+    backgroundColor: '#f1f4f6',
     marginTop: 50,
   },
 });

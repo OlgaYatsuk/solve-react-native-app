@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 import {
   StyleSheet,
-  Button,
   Image,
-  Text,
   View,
-  Animated,
-  Dimensions,
-  PanResponder,
+  ScrollView,
 } from 'react-native';
 import {Card} from 'react-native-elements';
 import axios from 'axios/index';
@@ -20,27 +16,27 @@ type State = {
 class SelectedCandidates extends Component<State> {
   render() {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <ScrollView style={styles.selectedCandidates} horizontal={true} showsHorizontalScrollIndicator={false}>
         {this.props.users.map(user => (
-          <View styles={{marginRight: 20, width: '25%', flexDirection: 'row'}}>
+          <View key={user.email} style={{marginRight: 5, width: 60}}>
             <Image source={{uri: user.picture.large}} style={styles.photo} />
-            <View>
-              <Text>{user.name.first}</Text>
-              <Text>{user.name.last}</Text>
-            </View>
           </View>
         ))}
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   photo: {
-    height: 34,
-    width: 34,
+    height: 48,
+    width: 48,
     borderRadius: 50,
   },
+
+  selectedCandidates: {
+    padding: 20
+  }
 });
 
 export default SelectedCandidates;

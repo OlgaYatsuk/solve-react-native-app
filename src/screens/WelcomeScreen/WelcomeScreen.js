@@ -22,7 +22,7 @@ class WelcomeScreen extends Component<Props> {
             padding: 20,
           }}>
           Hello! We would like to offer you a perfect deal: you give us money,
-          and we give you nothing. Click if you can't waiting for it:
+          and we give you perfect candidates. Click if you can't waiting for it:
         </Text>
         <Button title="Go to Purchasing" onPress={() => navigate('Card')} />
       </View>

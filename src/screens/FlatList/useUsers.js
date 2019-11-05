@@ -53,7 +53,7 @@ const useUsers = () => {
   };
 
   const handleRemoveItem = useCallback(() => {
-    const filteredUsers = users.filter(item => !item.isSelected);
+    const filteredUsers = users.filter((item: User) => !item.isSelected);
 
     setUsers(filteredUsers);
 

@@ -4,40 +4,91 @@ import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import UserInfoCard from './UserInfoCard';
-import UserInfoUpdateResponse from './UserInfoResponses/UserInfoUpdateResponse';
 
-class UpdateUserInfoCard extends Component<Props> {
+type Props = {}
+
+type State = {
+  isEditable: boolean,
+  isLoading: boolean,
+  isResponseReady: boolean,
+  isSearchStatusPickerVisible: boolean,
+  searchStatus: string,
+  name: string,
+  country: string,
+  age: string
+}
+
+class UpdateUserInfoCard extends Component<Props, State> {
   state = {
     isEditable: true,
-    size: '',
+    isSearchStatusPickerVisible: false,
+    searchStatus: 'Yes, send me jobs',
+    name: 'Olga',
+    country: 'UA',
+    age: '23',
+    isLoading: false,
+    isResponseReady: false
   };
 
   handleButtonClick = () => {
-    //Put new data...
+    this.setState({
+      isLoading: true
+    });
+
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+        isResponseReady: true
+      })
+    }, 2000)
   };
 
-  handleSizeValueChange = itemValue => {
+  handleInputValueChange = (name:string) => (event: SyntheticEvent<HTMLInputElement>) => {
+    const value = event.nativeEvent.text;
+
     this.setState({
-      size: itemValue,
+      [name]: value
+    })
+  };
+
+  handleStatusValueChange = (itemValue: string) => {
+    this.setState({
+      searchStatus: itemValue,
     });
   };
 
-  handleSizeSelect = () => {
+  handleStatusSelect = () => {
     this.setState({
-      isSizePickerVisible: !this.state.isSizePickerVisible,
+      isSearchStatusPickerVisible: !this.state.isSearchStatusPickerVisible,
     });
   };
 
   render() {
+    const {
+      isSearchStatusPickerVisible,
+      searchStatus,
+      age,
+      name,
+      isResponseReady,
+      isLoading,
+      country
+    } = this.state;
+    const {navigate} = this.props.navigation;
     return (
       <UserInfoCard
+        navigate={navigate}
         title={'Update existing information'}
-        name={'Jumpsuit'}
-        size={this.state.size}
-        weight={'0.8'}
-        onSizeSelect={this.handleSizeSelect}
+        name={name}
+        country={country}
+        isLoading={isLoading}
+        onInputValueChange={this.handleInputValueChange}
+        searchStatus={searchStatus}
+        age={age}
+        isResponseReady={isResponseReady}
+        isSearchStatusPickerVisible={isSearchStatusPickerVisible}
+        onStatusSelect={this.handleStatusSelect}
         eventType={'Update'}
-        onSizeValueChange={this.handleSizeValueChange}
+        onStatusValueChange={this.handleStatusValueChange}
         onButtonClick={this.handleButtonClick}
       />
     );

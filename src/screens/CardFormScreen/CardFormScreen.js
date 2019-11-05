@@ -21,6 +21,7 @@ class CardFormScreen extends Component<Props> {
     );
   }
 }
+
 const styles = StyleSheet.create({
   BlueView: {
     backgroundColor: '#dde6f6',

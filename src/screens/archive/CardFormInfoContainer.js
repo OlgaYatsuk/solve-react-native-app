@@ -1,5 +1,3 @@
-// @flow
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import CardFormInfo from '../CardFormScreen/CardFormInfo/CardFormInfo';
@@ -7,7 +5,7 @@ import {updateCardData} from '../../actions/updateCardData';
 import {ValidationStatus} from '../../utils/validationStatus';
 
 type State = {
-  cardType?: string,
+  cardType: string,
 };
 
 type Props = {
@@ -20,7 +18,7 @@ type Props = {
 
 class CardFormInfoContainer extends Component<Props, State> {
   state = {
-    cardType: undefined,
+    cardType: '',
   };
 
   componentDidMount(): void {

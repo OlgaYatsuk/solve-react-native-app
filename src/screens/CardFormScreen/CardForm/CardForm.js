@@ -16,7 +16,7 @@ import {validateCardData} from '../../../actions/validateCardData';
 import {connect} from 'react-redux';
 import {ValidationStatus} from '../../../utils/validationStatus';
 
-const CardForm = ({isLoading, updateCardData, validateCardData}) => {
+const CardForm = ({isLoading, navigate, updateCardData, validateCardData}) => {
   const {
     handleSubmit,
     isInputFieldValid,
@@ -81,9 +81,9 @@ const CardForm = ({isLoading, updateCardData, validateCardData}) => {
       <TouchableHighlight style={styles.Button} onPress={handleSubmit}>
         <Text style={styles.ButtonText}>Submit</Text>
       </TouchableHighlight>
-      {/*<Button onPress={() => {navigation.navigate('UsersList')}}*/}
-      {/*title={'Show other people who have paid'}*/}
-      {/*/>*/}
+      <Button onPress={() => {navigate('SwipeScreen')}}
+              title={'Try'}
+      />
     </View>
   );
 };

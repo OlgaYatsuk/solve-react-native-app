@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {NavigationScreenProps} from 'react-navigation';
 import SwipeCardContainer from './components/SwipeCard/SwipeCardContainer';
 import SwipeToolbarContainer from './components/SwipeToolbar/SwipeToolbarContainer';
@@ -14,6 +14,7 @@ type State = {
 class SwipeScreen extends Component<State> {
   state = {
     users: '',
+    isReseting: false,
     likedCandidatesCounter: 0,
     likedCandidates: [],
     passedCandidates: [],
@@ -25,9 +26,8 @@ class SwipeScreen extends Component<State> {
   }
 
   getNewUsers = () => {
-    axios
-      .get(
-        'https://randomuser.me/api/?results=5&inc=name,picture,nat=us,dk,fr,gb',
+      axios.get(
+        'https://randomuser.me/api/?results=2&inc=name,email,picture,nat=us,dk,fr,gb',
       )
       .then(this.handleUsersDataRequest)
       .catch(e => {
@@ -40,14 +40,14 @@ class SwipeScreen extends Component<State> {
   handleSwipeRight = user => {
     this.setState(({likedCandidatesCounter}) => ({
       likedCandidatesCounter: likedCandidatesCounter + 1,
-      likedCandidates: this.state.likedCandidates.concat(user),
+      likedCandidates: [user, ...this.state.likedCandidates],
     }));
   };
 
   handleSwipeLeft = user => {
     this.setState(({passedCandidatesCounter}) => ({
       passedCandidatesCounter: passedCandidatesCounter + 1,
-      passedCandidates: this.state.passedCandidates.concat(user),
+      passedCandidates: [user, ...this.state.passedCandidates],
     }));
   };
 
@@ -56,11 +56,15 @@ class SwipeScreen extends Component<State> {
       {
         likedCandidatesCounter: 0,
         passedCandidatesCounter: 0,
-      },
-      () => {
+        isReseting: true
+      }, () => {
         this.getNewUsers();
+        this.setState({
+          isReseting: false
+        })
       },
     );
+
   };
 
   handleUsersDataRequest = ({data}) => {
@@ -82,12 +86,16 @@ class SwipeScreen extends Component<State> {
       passedCandidatesCounter,
       likedCandidatesCounter,
       likedCandidates,
+      isReseting,
       passedCandidates,
     } = this.state;
 
+    const {navigate} = this.props.navigation;
+
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.BlueView}>
         <SwipeToolbarContainer
+          navigate={navigate}
           passedCandidatesCounter={passedCandidatesCounter}
           likedCandidatesCounter={likedCandidatesCounter}
           onReviewWindowToggle={this.onReviewWindowToggle}
@@ -95,6 +103,7 @@ class SwipeScreen extends Component<State> {
         <SelectedCandidatesContainer likedCandidates={likedCandidates} />
         <SwipeCardContainer
           users={users}
+          isReseting={isReseting}
           onSwipeRight={this.handleSwipeRight}
           resetSearch={this.resetSearch}
           onSwipeLeft={this.handleSwipeLeft}
@@ -103,5 +112,12 @@ class SwipeScreen extends Component<State> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  BlueView: {
+    backgroundColor: '#dde6f6',
+    // flex: 1
+  },
+});
 
 export default SwipeScreen;

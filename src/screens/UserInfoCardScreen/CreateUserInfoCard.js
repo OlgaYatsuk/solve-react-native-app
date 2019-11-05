@@ -5,10 +5,25 @@ import {View, StyleSheet} from 'react-native';
 
 import UserInfoCard from './UserInfoCard';
 
-class CreateUserInfoCard extends Component<Props> {
+type Props = {}
+
+type State = {
+  isEditable: boolean,
+  isSearchStatusPickerVisible: boolean,
+  searchStatus: string,
+  name: string,
+  country: string,
+  age: string
+}
+
+class CreateUserInfoCard extends Component<Props, State> {
   state = {
     isEditable: true,
-    isSizePickerVisible: false,
+    isSearchStatusPickerVisible: false,
+    searchStatus: '',
+    country: '',
+    age: '',
+    name: ''
   };
 
   handleButtonClick = () => {
@@ -19,36 +34,53 @@ class CreateUserInfoCard extends Component<Props> {
     //Post new data...
   };
 
-  handleSizeValueChange = itemValue => {
+  handleStatusValueChange = (itemValue: string) => {
     this.setState({
-      size: itemValue,
+      searchStatus: itemValue,
     });
   };
 
-  handleSizeSelect = () => {
+  handleStatusSelect = () => {
     this.setState({
-      isSizePickerVisible: !this.state.isSizePickerVisible,
+      isSearchStatusPickerVisible: !this.state.isSearchStatusPickerVisible,
     });
+  };
+
+  handleInputValueChange = (name:string) => (event: SyntheticEvent<HTMLInputElement>) => {
+    const value = event.nativeEvent.text;
+
+    this.setState({
+      [name]: value
+    })
   };
 
   render() {
-    const {isEditable, isSizePickerVisible, size} = this.state;
+    const {
+      isEditable,
+      isSearchStatusPickerVisible,
+      searchStatus,
+      age,
+      name,
+      country
+    } = this.state;
 
     return (
       <UserInfoCard
         title={'Create new card'}
-        size={size}
+        searchStatus={searchStatus}
         isEditable={isEditable}
-        isSizePickerVisible={isSizePickerVisible}
-        onSizeSelect={this.handleSizeSelect}
+        age={age}
+        name={name}
+        country={country}
+        onInputValueChange={this.handleInputValueChange}
+        isSearchStatusPickerVisible={isSearchStatusPickerVisible}
+        onStatusSelect={this.handleStatusSelect}
         eventType={'create'}
-        onSizeValueChange={this.handleSizeValueChange}
+        onStatusValueChange={this.handleStatusValueChange}
         onButtonClick={this.handleButtonClick}
       />
     );
   }
 }
-
-const styles = StyleSheet.create({});
 
 export default CreateUserInfoCard;
