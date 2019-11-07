@@ -81,8 +81,11 @@ const CardForm = ({isLoading, navigate, updateCardData, validateCardData}) => {
       <TouchableHighlight style={styles.Button} onPress={handleSubmit}>
         <Text style={styles.ButtonText}>Submit</Text>
       </TouchableHighlight>
-      <Button onPress={() => {navigate('SwipeScreen')}}
-              title={'Try'}
+      <Button
+        onPress={() => {
+          navigate('SwipeScreen');
+        }}
+        title={'Try'}
       />
     </View>
   );

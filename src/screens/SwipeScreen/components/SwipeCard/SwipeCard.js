@@ -13,7 +13,7 @@ const SwipeCard = props => {
       </View>
       <View style={styles.detailWrapper}>
         <Text>{props.name}</Text>
-        <Text>{props.name}</Text>
+        <Text style={styles.email}>{props.email}</Text>
       </View>
     </Card>
   );
@@ -24,6 +24,11 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 10,
+    marginTop: 20,
+  },
+
+  email: {
+    color: '#001bff',
   },
 };
 

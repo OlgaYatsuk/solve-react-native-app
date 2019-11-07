@@ -8,14 +8,23 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Image,
   StyleSheet,
 } from 'react-native';
 
 import useUsers from './useUsers';
+import {connect} from 'react-redux';
+import {likeCandidate} from '../../actions/likeCandidate';
+import {deleteCandidate} from '../../actions/deleteCandidate';
+import {selectCandidate} from '../../actions/selectCandidate';
 
-export const FlatListTest = () => {
+const FlatListTest = ({
+  selectedCandidates,
+  deleteCandidate,
+  selectCandidate,
+}) => {
   const {
-    users,
+    candidates,
     handleItemSelect,
     handleRemoveItem,
     handleItemAdd,
@@ -23,14 +32,21 @@ export const FlatListTest = () => {
     handleInputChange,
     isRemoveButtonDisabled,
     isAddButtonDisabled,
-  } = useUsers();
+  } = useUsers(selectedCandidates, deleteCandidate, selectCandidate);
 
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         onPress={() => handleItemSelect(item)}
         style={!item.isSelected ? styles.List : [styles.List, styles.selected]}>
-        <Text style={styles.LightText}>{item.title}</Text>
+        {/*<Text style={styles.LightText}>{item.title}</Text>*/}
+        <Image style={styles.Image} source={{uri: item.picture.large}} />
+        <View>
+          <Text style={styles.UserName}>
+            {item.name.first} {item.name.last}
+          </Text>
+          <Text style={styles.UserAge}>Email: {item.email}</Text>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -38,34 +54,51 @@ export const FlatListTest = () => {
   return (
     <View style={styles.BlueView}>
       <View style={styles.FlatListHeader}>
-        <Text style={styles.Title}>How do you like this?</Text>
+        <Text style={styles.Title}>Time to review your candidates!</Text>
         <TextInput
           onChangeText={handleInputChange}
           value={value}
           style={styles.Input}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <Button
-            onPress={handleItemAdd}
-            value={value}
-            disabled={isAddButtonDisabled}
-            title={'Add item'}
-          />
+          {/*<Button*/}
+          {/*onPress={handleItemAdd}*/}
+          {/*value={value}*/}
+          {/*disabled={isAddButtonDisabled}*/}
+          {/*title={'Add item'}*/}
+          {/*/>*/}
           <Button
             onPress={handleRemoveItem}
             disabled={isRemoveButtonDisabled}
-            title={'Remove item'}
+            title={'Pass selected candidates'}
           />
         </View>
       </View>
       <FlatList
-        data={users}
-        renderItem={user => renderItem(user)}
-        keyExtractor={item => item.id.toString()}
+        data={candidates}
+        renderItem={item => renderItem(item)}
+        keyExtractor={item => item.email}
       />
     </View>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    selectedCandidates: state.selectedCandidatesReducer.selectedCandidates,
+  };
+};
+
+const mapDispatchToProps = {
+  likeCandidate,
+  selectCandidate,
+  deleteCandidate,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FlatListTest);
 
 const styles = StyleSheet.create({
   BlueView: {
@@ -77,14 +110,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#668aff',
-    height: 50,
     marginLeft: 15,
     marginRight: 15,
+    marginBottom: 15,
+    padding: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     zIndex: -1,
   },
+  Image: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+
   selected: {
     backgroundColor: '#c1ceff',
   },

@@ -3,6 +3,8 @@
 import React, {Component} from 'react';
 
 import UsersList from './UsersList';
+import {connect} from 'react-redux';
+import {likeCandidate} from '../../actions/likeCandidate';
 
 type Props = {};
 
@@ -21,21 +23,26 @@ class UsersListContainer extends Component<Props, State> {
     users: [],
   };
 
-  componentDidMount() {
-    fetch('https://randomuser.me/api/?results=100&inc=name,picture,dob')
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          users: res.results,
-        });
-      });
-  }
+  componentDidMount() {}
 
   render() {
-    const {users} = this.state;
+    const {selectedCandidates} = this.props;
 
-    return <UsersList users={users} />;
+    return <UsersList users={selectedCandidates} />;
   }
 }
 
-export default UsersListContainer;
+const mapStateToProps = state => {
+  return {
+    selectedCandidates: state.selectedCandidatesReducer.selectedCandidates,
+  };
+};
+
+const mapDispatchToProps = {
+  likeCandidate,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UsersListContainer);

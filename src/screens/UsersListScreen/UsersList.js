@@ -6,11 +6,11 @@ import {FlatList, View, Text, Image, StyleSheet} from 'react-native';
 type User = {
   picture: {large: string},
   name: {first: string, last: string},
-  dob: {age: string, date: string},
+  email: 'string',
 };
 
 const UsersList = ({users}: {users: User[]}) => {
-  const keyExtractor = item => item.dob.date;
+  const keyExtractor = (item: {}) => item.email;
 
   return (
     <View style={styles.BlueView}>
@@ -29,7 +29,7 @@ const UsersList = ({users}: {users: User[]}) => {
               <Text style={styles.UserName}>
                 {item.name.first} {item.name.last}
               </Text>
-              <Text style={styles.UserAge}>Age: {item.dob.age}</Text>
+              <Text style={styles.UserAge}>Email: {item.email}</Text>
             </View>
           </View>
         )}

@@ -5,7 +5,7 @@ import {View, StyleSheet} from 'react-native';
 
 import UserInfoCard from './UserInfoCard';
 
-type Props = {}
+type Props = {};
 
 type State = {
   isEditable: boolean,
@@ -15,8 +15,8 @@ type State = {
   searchStatus: string,
   name: string,
   country: string,
-  age: string
-}
+  age: string,
+};
 
 class UpdateUserInfoCard extends Component<Props, State> {
   state = {
@@ -27,28 +27,30 @@ class UpdateUserInfoCard extends Component<Props, State> {
     country: 'UA',
     age: '23',
     isLoading: false,
-    isResponseReady: false
+    isResponseReady: false,
   };
 
   handleButtonClick = () => {
     this.setState({
-      isLoading: true
+      isLoading: true,
     });
 
     setTimeout(() => {
       this.setState({
         isLoading: false,
-        isResponseReady: true
-      })
-    }, 2000)
+        isResponseReady: true,
+      });
+    }, 2000);
   };
 
-  handleInputValueChange = (name:string) => (event: SyntheticEvent<HTMLInputElement>) => {
+  handleInputValueChange = (name: string) => (
+    event: SyntheticEvent<HTMLInputElement>,
+  ) => {
     const value = event.nativeEvent.text;
 
     this.setState({
-      [name]: value
-    })
+      [name]: value,
+    });
   };
 
   handleStatusValueChange = (itemValue: string) => {
@@ -71,7 +73,7 @@ class UpdateUserInfoCard extends Component<Props, State> {
       name,
       isResponseReady,
       isLoading,
-      country
+      country,
     } = this.state;
     const {navigate} = this.props.navigation;
     return (

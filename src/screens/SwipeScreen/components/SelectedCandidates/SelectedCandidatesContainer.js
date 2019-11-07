@@ -19,7 +19,7 @@ class SelectedCandidatesContainer extends Component<Props> {
   // };
   //
   render() {
-    return <SelectedCandidates users={this.props.likedCandidates} />;
+    return <SelectedCandidates likedCandidates={this.props.likedCandidates} />;
   }
 }
 

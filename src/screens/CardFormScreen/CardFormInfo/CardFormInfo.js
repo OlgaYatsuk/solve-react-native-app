@@ -58,7 +58,6 @@ const CardFormInfo = ({
           {creditCardNumber.slice(12, 16)}
         </Text>
       </View>
-
     );
   }
   return <View />;

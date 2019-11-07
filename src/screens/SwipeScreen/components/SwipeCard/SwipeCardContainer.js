@@ -54,14 +54,7 @@ class SwipeCardContainer extends React.Component<State> {
       : this.props.onSwipeLeft(item);
     this.position.setValue({x: 0, y: 0});
 
-    console.log();
-    this.setState({index: this.state.index + 1},
-      () => {
-        this.setState({
-          index:0
-        })
-      }
-    );
+    this.setState({index: this.state.index + 1});
   };
 
   resetPosition = () => {
@@ -83,19 +76,19 @@ class SwipeCardContainer extends React.Component<State> {
     };
   }
 
-  renderNoMoreCards = () => {
-    // if (this.props.isReseting) {
-    //   this.setState({
-    //     index: 0
-    //   });
-    // }
+  resetSearch = () => {
+    this.setState({index: 0}, () => {
+      this.props.onCandidatesUpdate();
+    });
+  };
 
+  renderNoMoreCards = () => {
     return (
       <Card title="No More cards">
         <Button
-          title="Reload"
+          title="Load more candidates"
           large
-          onPress={this.props.resetSearch}
+          onPress={this.resetSearch}
           icon={{name: 'my-location'}}
           backgroundColor="#03A9F4"
         />
@@ -107,46 +100,48 @@ class SwipeCardContainer extends React.Component<State> {
     const {users} = this.props;
 
     if (this.state.index >= users.length) {
-      return this.renderNoMoreCards()
+      return this.renderNoMoreCards();
     }
 
     return (
-      <View style={styles.container}>
-          {users.map((user, index) => {
-            if (index < this.state.index) {
-              return null;
-            }
+      <View style={styles.cardWrapper}>
+        {users.map((user, index) => {
+          if (index < this.state.index) {
+            return null;
+          }
 
-            if (index === this.state.index) {
-              return (
-                <Animated.View
-                  key={user.email}
-                  style={[this.getCardStyle(), styles.cardStyle, {zIndex: 99}]}
-                  {...this._panResponder.panHandlers}>
-                  <SwipeCard
-                    title={user.name.first}
-                    name={`${user.name.first} ${user.name.last}`}
-                    photo={user.picture.large}
-                  />
-                </Animated.View>
-              );
-            }
-
+          if (index === this.state.index) {
             return (
-              <View
-                key={index}
-                style={[
-                  styles.cardStyle,
-                  {top: 0.9 * (index - this.state.index), zIndex: 5},
-                ]}>
+              <Animated.View
+                key={user.email}
+                style={[this.getCardStyle(), styles.cardStyle, {zIndex: 99}]}
+                {...this._panResponder.panHandlers}>
                 <SwipeCard
                   title={user.name.first}
-                  photo={user.picture.large}
+                  email={user.email}
                   name={`${user.name.first} ${user.name.last}`}
+                  photo={user.picture.large}
                 />
-              </View>
+              </Animated.View>
             );
-          })}
+          }
+
+          return (
+            <View
+              key={index}
+              style={[
+                styles.cardStyle,
+                {top: 0.9 * (index - this.state.index), zIndex: 5},
+              ]}>
+              <SwipeCard
+                title={user.name.first}
+                photo={user.picture.large}
+                email={user.email}
+                name={`${user.name.first} ${user.name.last}`}
+              />
+            </View>
+          );
+        })}
       </View>
     );
   }
@@ -154,8 +149,8 @@ class SwipeCardContainer extends React.Component<State> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#f1f4f6',
+    // flex: 1,
+    backgroundColor: '#668aff',
     alignSelf: 'flex-start',
   },
   statusStyle: {
@@ -166,13 +161,14 @@ const styles = StyleSheet.create({
   },
   cardStyle: {
     position: 'absolute',
-    flex: 2,
-    backgroundColor: '#f1f4f6',
+    // flex: 2,
+    marginTop: 20,
+    // backgroundColor: '#c1ceff',
     width: SCREEN_WIDTH,
   },
   cardWrapper: {
-    backgroundColor: '#f1f4f6',
-    marginTop: 50,
+    // backgroundColor: '#c1ceff',
+    // height: '100%',
   },
 });
 

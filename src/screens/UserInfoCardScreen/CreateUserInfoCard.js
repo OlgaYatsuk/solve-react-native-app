@@ -5,7 +5,7 @@ import {View, StyleSheet} from 'react-native';
 
 import UserInfoCard from './UserInfoCard';
 
-type Props = {}
+type Props = {};
 
 type State = {
   isEditable: boolean,
@@ -13,8 +13,8 @@ type State = {
   searchStatus: string,
   name: string,
   country: string,
-  age: string
-}
+  age: string,
+};
 
 class CreateUserInfoCard extends Component<Props, State> {
   state = {
@@ -23,7 +23,7 @@ class CreateUserInfoCard extends Component<Props, State> {
     searchStatus: '',
     country: '',
     age: '',
-    name: ''
+    name: '',
   };
 
   handleButtonClick = () => {
@@ -46,12 +46,14 @@ class CreateUserInfoCard extends Component<Props, State> {
     });
   };
 
-  handleInputValueChange = (name:string) => (event: SyntheticEvent<HTMLInputElement>) => {
+  handleInputValueChange = (name: string) => (
+    event: SyntheticEvent<HTMLInputElement>,
+  ) => {
     const value = event.nativeEvent.text;
 
     this.setState({
-      [name]: value
-    })
+      [name]: value,
+    });
   };
 
   render() {
@@ -61,7 +63,7 @@ class CreateUserInfoCard extends Component<Props, State> {
       searchStatus,
       age,
       name,
-      country
+      country,
     } = this.state;
 
     return (

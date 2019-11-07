@@ -1,6 +1,7 @@
 // @flow
 
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import {deleteCandidate} from '../../actions/deleteCandidate';
 
 type User = {
   id: number,
@@ -11,26 +12,11 @@ type User = {
   isSelected: boolean,
 };
 
-const useUsers = () => {
-  const [users, setUsers] = useState(([]: User[]));
+const useUsers = (selectedCandidates, deleteCandidate, selectCandidate) => {
+  const [candidates, setCandidates] = useState(([]: User[]));
   const [value, setValue] = useState('');
   const [isRemoveButtonDisabled, setRemoveButtonEnabled] = useState(true);
   const [isAddButtonDisabled, setAddButtonEnabled] = useState(true);
-
-  const fetchData = () => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(responseJson => {
-        responseJson = responseJson.map(item => {
-          item.isSelected = false;
-          return item;
-        });
-        setUsers(responseJson);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
 
   const handleInputChange = useCallback((value: string) => {
     setValue(value);
@@ -38,52 +24,48 @@ const useUsers = () => {
   });
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    setCandidates(selectedCandidates);
+  }, [selectedCandidates]);
 
   const handleItemSelect = (item: User) => {
-    const usersWithSelectedItems = users.map(user => {
-      return user.id === item.id
-        ? {...user, isSelected: !item.isSelected}
-        : user;
-    });
-
-    setUsers(usersWithSelectedItems);
+    selectCandidate(item);
     setRemoveButtonEnabled(false);
   };
 
   const handleRemoveItem = useCallback(() => {
-    const filteredUsers = users.filter((item: User) => !item.isSelected);
+    // const filteredUsers = candidates.filter((item: User) => !item.isSelected);
+    //
+    // setCandidates(filteredUsers);
 
-    setUsers(filteredUsers);
+    deleteCandidate();
 
     setRemoveButtonEnabled(!isRemoveButtonDisabled);
-  }, [users, isRemoveButtonDisabled]);
+  }, [candidates, isRemoveButtonDisabled]);
 
-  const handleItemAdd = useCallback(() => {
-    if (!value) {
-      return;
-    }
-
-    const newUsers = [
-      {
-        title: value,
-        body: '',
-        userId: users.length + 1,
-        isSelected: false,
-        id: users.length + 1,
-      },
-      ...users,
-    ];
-
-    setUsers(newUsers);
-  }, [value]);
+  // const handleItemAdd = useCallback(() => {
+  //   if (!value) {
+  //     return;
+  //   }
+  //
+  //   const newUsers = [
+  //     {
+  //       title: value,
+  //       body: '',
+  //       userId: users.length + 1,
+  //       isSelected: false,
+  //       id: users.length + 1,
+  //     },
+  //     ...users,
+  //   ];
+  //
+  //   setCandidates(newUsers);
+  // }, [value]);
 
   return {
-    users,
+    candidates,
     handleItemSelect,
     handleRemoveItem,
-    handleItemAdd,
+    // handleItemAdd,
     value,
     handleInputChange,
     isRemoveButtonDisabled,

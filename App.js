@@ -12,7 +12,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import CardFormScreen from './src/screens/CardFormScreen/CardFormScreen';
 import SuccessScreen from './src/screens/SuccessScreen';
-import {FlatListTest} from './src/screens/FlatList';
+import FlatListTest from './src/screens/FlatList';
 import UsersList from './src/screens/UsersListScreen';
 import UserInfoCardScreen from './src/screens/UserInfoCardScreen';
 import SwipeScreen from './src/screens/SwipeScreen';
